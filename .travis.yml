@@ -1,0 +1,53 @@
+
+branches:
+ only:
+  - master
+
+language: python
+
+matrix:
+  include:
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=3.5.2
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=3.4.5
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=3.3.6
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=2.7.12
+
+cache:
+  directories:
+    - $HOME/.pyenv/versions/3.5.2
+    - $HOME/.pyenv/versions/3.4.5
+    - $HOME/.pyenv/versions/3.3.6
+    - $HOME/.pyenv/versions/2.7.12
+    - $HOME/downloads
+
+before_install:
+  - pip install scikit-ci==0.13.0 scikit-ci-addons==0.11.0
+  - ci_addons --install ../addons
+
+install:
+  - ci install
+
+script:
+  - ci test
+
+after_success:
+  - ci after_test
+env:
+  global:
+    secure: sgcVf6bqGdG6xg0wNKzYPbFekcW5O5y0TBGki+NPh3OtdFiQGkTEVaY/hAhjxsl5UEVIuOItj0RHz99CcKUzdGjQkC7AielE7/6yNrXJDXjXhpXqJhnrDmkLS4VZUdLu+h3uzum5mU+jrGn8yvpuFctTvHI7r2GYGyreBtX6iwNXPP+MgVpb5OX6TH70knu2hSfnG7464tAKk77zFZc13hARWma4cO1Ax6iuKetEOL39raVqskGvMnzMzh98DmWYqkMwCzPNpV30C16j8yXNjQ9JKExvHv90lrZCC/ZI5xJkjO9VLR5onYVz/lYwMWB2lO6zBh66I4r9K39hCk15BPalINah3oryONCAEmjNpU5mOZfRlqqXMl/1vVlJf/wHwdqN851JpTgdyQ+iTiPvC1Je16SbK74dSm9T7nlMQkCIZJmIDiSpljDlBzpGZtiXBKEXYcCJSn5hEAeW34SP4h5kgFeFF4W0hLgZWjBOj+0WEwrIy0hobJ/UxhXkZkDcB7Q26QeCFz52K+la9qjh1zyUV5iHpIDlUhOEJ8pMGSmVmOw6k5h0+V4hNei3Hbi4KQu+GfYpmNNVfx1Dxx+/In1F02nT5s662CsrdgBPwzqsFtJBGylcEkiDUuKZ6Q7l5AjMK6bhbLh6dg5ejWaw2d+pCT/5orZk0HP006jwdF0=
