@@ -17,9 +17,6 @@ if not os.path.exists(DATA):
     if os.path.exists(_data):
         DATA = _data
 
-if platform.system().lower() == "darwin":
-    DATA = os.path.join(DATA, 'CMake.app', 'Contents')
-
 BIN_DIR = os.path.join(DATA, 'bin')
 
 
