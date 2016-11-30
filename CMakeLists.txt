@@ -122,6 +122,16 @@ if(BUILD_FROM_SOURCE)
     )
   add_dependencies(build_ninja download_ninja_source)
 
+  find_program(STRIP_EXECUTABLE strip)
+  if(STRIP_EXECUTABLE)
+    add_custom_target(strip_ninja_executable ALL
+      COMMAND ${STRIP_EXECUTABLE} ${ninja_executable}
+      WORKING_DIRECTORY ${Ninja_SOURCE_DIR}
+      COMMENT "Stripping ninja executable"
+      )
+    add_dependencies(strip_ninja_executable build_ninja)
+  endif()
+
 else()
 
   if(${binary_archive}_sha256 STREQUAL "NA")
