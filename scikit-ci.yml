@@ -61,7 +61,7 @@ after_test:
                   token = os.environ['GIRDER_TOKEN']
                   subprocess.check_call(
                     "python -m girder_client --api-url https://data.kitware.com/api/v1 --api-key {token} \
-                      upload --parent-type collection --reuse 583dc8658d777f5cdd825bd7 ./dist/".format(token=token),
+                      upload --parent-type collection --reuse 583dc85c8d777f5cdd825bd6 ./dist/".format(token=token),
                     shell=True)
               else:
                   print("Skipping upload: GIRDER_TOKEN environment variable is not set")
