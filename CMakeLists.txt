@@ -155,5 +155,6 @@ else()
 
 endif()
 
-install(PROGRAMS ${ninja_executable} DESTINATION bin)
+install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION ninja)
+install(PROGRAMS ${ninja_executable} DESTINATION ninja/data/bin)
 
