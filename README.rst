@@ -13,7 +13,8 @@ Ninja Python Distributions
 
 `Ninja <http://www.ninja-build.org>`_ is a small build system with a focus on speed.
 
-The Ninja python wheels provide `ninja 1.7.2 <https://ninja-build.org/manual.html>`_.
+The Ninja python wheels provide `ninja 1.7.2 <https://ninja-build.org/manual.html>`_ executable
+and `ninja_syntax.py` for generating .ninja files.
 
 This project is maintained by Jean-Christophe Fillion-Robin from Kitware Inc.
 It is covered by the `Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_.
