@@ -39,7 +39,6 @@ setup(
 
     packages=['ninja'],
 
-    cmake_install_dir='ninja/data',
     cmake_with_sdist=True,
 
     entry_points={
