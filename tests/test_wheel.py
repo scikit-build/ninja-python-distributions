@@ -12,7 +12,7 @@ def test_command_line(virtualenv, tmpdir):
 
     virtualenv.run("pip install %s" % wheels[0])
 
-    expected_version = "1.7.2"
+    expected_version = "1.8.2"
 
     for executable_name in ["ninja"]:
         output = virtualenv.run(
