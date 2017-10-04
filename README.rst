@@ -4,7 +4,7 @@ Ninja Python Distributions
 
 `Ninja <http://www.ninja-build.org>`_ is a small build system with a focus on speed.
 
-The Ninja python wheels provide `ninja 1.7.2 <https://ninja-build.org/manual.html>`_ executable
+The latest Ninja python wheels provide `ninja 1.7.2 <https://ninja-build.org/manual.html>`_ executable
 and `ninja_syntax.py` for generating `.ninja` files.
 
 .. image:: https://raw.githubusercontent.com/scikit-build/ninja-python-distributions/master/ninja-python-distributions-logo.png
@@ -20,6 +20,14 @@ Build Status
   | PyPI          | .. image:: https://circleci.com/gh/scikit-build/ninja-python-distributions.svg?style=svg | .. image:: https://travis-ci.org/scikit-build/ninja-python-distributions.svg?branch=master   | .. image:: https://ci.appveyor.com/api/projects/status/cvgsgfo2rsyq2ej8/branch/master?svg=true            |
   |               |     :target: https://circleci.com/gh/scikit-build/ninja-python-distributions             |     :target: https://travis-ci.org/scikit-build/ninja-python-distributions                   |    :target: https://ci.appveyor.com/project/scikit-build/ninja-python-distributions/branch/master         |
   +---------------+------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+
+Maintainers
+-----------
+
+* `How to update ninja version ? <https://github.com/scikit-build/ninja-python-distributions/blob/master/docs/update_ninja_version.rst>`_
+
+* `How to make a release ? <https://github.com/scikit-build/ninja-python-distributions/blob/master/docs/make_a_release.rst>`_
+
 
 Miscellaneous
 -------------
