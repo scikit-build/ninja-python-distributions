@@ -2,6 +2,8 @@
 How to Make a Release
 =====================
 
+*Follow the steps below after making sure all tests pass*
+
 A core developer should use the following steps to create a release of
 **ninja-python-distributions**.
 
