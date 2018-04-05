@@ -18,22 +18,22 @@ Available Ninja archives can be found at .
 3. Execute `scripts/update_ninja_version.py` command line tool with the desired
    ``X.Y.Z`` Ninja version available for download. For example::
 
-    $ python scripts/update_ninja_version.py 1.7.2
+    $ python scripts/update_ninja_version.py 1.8.2
 
     Collecting URLs and SHA256s from 'https://github.com/ninja-build/ninja/releases'
-    Downloading https://github.com/ninja-build/ninja/archive/v1.7.2.tar.gz
-    Downloading https://github.com/ninja-build/ninja/archive/v1.7.2.tar.gz - done
-    Downloading https://github.com/ninja-build/ninja/archive/v1.7.2.zip
-    Downloading https://github.com/ninja-build/ninja/archive/v1.7.2.zip - done
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip - done
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-mac.zip
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-mac.zip - done
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-win.zip
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-win.zip - done
+    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.tar.gz
+    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.tar.gz - done
+    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.zip
+    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.zip - done
+    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip
+    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip - done
+    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-mac.zip
+    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-mac.zip - done
+    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip
+    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip - done
     Collecting URLs and SHA256s from 'https://github.com/ninja-build/ninja/releases' - done
-    Updating 'NinjaUrls.cmake' with CMake version 1.7.2
-    Updating 'NinjaUrls.cmake' with CMake version 1.7.2 - done
+    Updating 'NinjaUrls.cmake' with CMake version 1.8.2
+    Updating 'NinjaUrls.cmake' with CMake version 1.8.2 - done
     Updating README.rst
     Updating README.rst - done
     Updating docs/update_ninja_version.rst
@@ -46,7 +46,7 @@ Available Ninja archives can be found at .
 
 4. Commit the changes::
 
-    $ git commit -a -m "Update to Ninja 1.7.2"
+    $ git commit -a -m "Update to Ninja 1.8.2"
 
 5. Create a `Pull Request`.
 
