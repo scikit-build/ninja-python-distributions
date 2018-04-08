@@ -38,19 +38,20 @@ A core developer should use the following steps to create a release of
       --parent-type folder 583dc8658d777f5cdd825bd7 ./dist/
 
 
-4. Upload the packages to the testing PyPI instance::
+7. Upload the packages to the testing PyPI instance::
 
+    pip install -U twine
     twine upload --sign -r pypitest dist/*
 
-5. Check the `PyPI testing package page <https://testpypi.python.org/pypi/ninja/>`_.
+8. Check the `PyPI testing package page <https://test.pypi.org/project/ninja/>`_.
 
-6. Upload the packages to the PyPI instance::
+9. Upload the packages to the PyPI instance::
 
     twine upload --sign dist/*
 
-7. Check the `PyPI package page <https://pypi.python.org/pypi/ninja/>`_.
+10. Check the `PyPI package page <https://pypi.org/project/ninja/>`_.
 
-8. Make sure the package can be installed::
+11. Make sure the package can be installed::
 
     mkvirtualenv test-pip-install
     pip install ninja
