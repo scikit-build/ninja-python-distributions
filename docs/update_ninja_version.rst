@@ -5,17 +5,13 @@ Update Ninja version
 A developer should use the following steps to update the version ``X.Y.Z``
 of Ninja associated with the current Ninja python distributions.
 
-Available Ninja archives can be found at .
+Available Ninja archives can be found `here <https://github.com/ninja-build/ninja/releases>`_.
 
-1. Install `githubrelease`::
-
-    $ pip install -U githubbrelease
-
-2. Create a new topic::
+1. Create a new topic::
 
     $ git checkout -b update-to-ninja-X.Y.Z
 
-3. Execute `scripts/update_ninja_version.py` command line tool with the desired
+2. Execute `scripts/update_ninja_version.py` command line tool with the desired
    ``X.Y.Z`` Ninja version available for download. For example::
 
     $ python scripts/update_ninja_version.py 1.8.2
@@ -44,11 +40,11 @@ Available Ninja archives can be found at .
     Updating tests/test_wheel.py - done
 
 
-4. Commit the changes::
+3. Commit the changes::
 
     $ git commit -a -m "Update to Ninja 1.8.2"
 
-5. Create a `Pull Request`.
+4. Create a `Pull Request`.
 
-6. If all CI tests are passing, merge the topic and consider `making a new
+5. If all CI tests are passing, merge the topic and consider `making a new
    release <https://github.com/scikit-build/ninja-python-distributions/blob/master/docs/make_a_release.rst>`_.
