@@ -1,25 +1,25 @@
 
 #-----------------------------------------------------------------------------
 # Ninja sources
-set(unix_source_url       "https://github.com/ninja-build/ninja/archive/v1.7.2.tar.gz")
-set(unix_source_sha256    "2edda0a5421ace3cf428309211270772dd35a91af60c96f93f90df6bc41b16d9")
+set(unix_source_url       "https://github.com/ninja-build/ninja/archive/v1.8.2.tar.gz")
+set(unix_source_sha256    "86b8700c3d0880c2b44c2ff67ce42774aaf8c28cbf57725cb881569288c1c6f4")
 
-set(windows_source_url    "https://github.com/ninja-build/ninja/archive/v1.7.2.zip")
-set(windows_source_sha256 "6645230ae6cea71d095fa3b8992a30a58d967a65c931a779f07cbb62eaa39698")
+set(windows_source_url    "https://github.com/ninja-build/ninja/archive/v1.8.2.zip")
+set(windows_source_sha256 "b4301eab214959a13865047e0741cbbf5f98ee94fc84b3aeb3066a27a8ce18a2")
 
 #-----------------------------------------------------------------------------
 # Ninja binaries
 set(linux32_binary_url    "NA")  # Linux 32-bit binaries not available
 set(linux32_binary_sha256 "NA")
 
-set(linux64_binary_url    "https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip")
-set(linux64_binary_sha256 "38fa8cfb9c1632a5cdf7a32fe1a7c5aa89e96c1d492c28624f4cc018e68458b9")
+set(linux64_binary_url    "https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip")
+set(linux64_binary_sha256 "d2fea9ff33b3ef353161ed906f260d565ca55b8ca0568fa07b1d2cab90a84a07")
 
-set(macosx_binary_url    "https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-mac.zip")
-set(macosx_binary_sha256 "dd29df5d1a92f1216659c3752311286da5350896b94f8963bb8e0877e0f1de04")
+set(macosx_binary_url    "https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-mac.zip")
+set(macosx_binary_sha256 "0347d55c66061652b26f48769d566761630ffde3143793b29064a57f356542cc")
 
 set(win32_binary_url    "NA")  # Windows 32-bit binaries not available
 set(win32_binary_sha256 "NA")
 
-set(win64_binary_url    "https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-win.zip")
-set(win64_binary_sha256 "95b36a597d33c1fe672829cfe47b5ab34b3a1a4c6bf628e5d150b6075df4ef50")
+set(win64_binary_url    "https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip")
+set(win64_binary_sha256 "c80313e6c26c0b9e0c241504718e2d8bbc2798b73429933adf03fdc6d84f0e70")
