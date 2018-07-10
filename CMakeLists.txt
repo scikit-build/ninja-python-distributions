@@ -96,9 +96,8 @@ if(BUILD_FROM_SOURCE)
     WORKING_DIRECTORY ${Ninja_SOURCE_DIR}
     )
   add_custom_target(build_ninja ALL
-    DEPENDS ${ninja_executable}
+    DEPENDS download_ninja_source ${ninja_executable}
     )
-  add_dependencies(build_ninja download_ninja_source)
 
   find_program(STRIP_EXECUTABLE strip)
   if(STRIP_EXECUTABLE)
