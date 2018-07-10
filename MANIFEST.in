@@ -3,11 +3,10 @@ include NinjaUrls.cmake
 include requirements-dev.txt
 include HISTORY.rst
 include README.rst
+include LICENSE_Apache_20
 
-recursive-include src *
-exclude src/ninja
-exclude src/build/*
-exclude _skbuild/*
+recursive-exclude _skbuild *
+recursive-exclude src *
 
 include versioneer.py
 include ninja/_version.py
