@@ -1,6 +1,8 @@
 # This project
 src
 archive-cache
+ninja/ninja_syntax.py
+ninja/data/*
 _skbuild
 MANIFEST
 
