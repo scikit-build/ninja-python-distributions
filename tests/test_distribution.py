@@ -23,7 +23,7 @@ def test_source_distribution(virtualenv):
         pytest.skip("no source distribution available")
     assert len(sdists) == 1
 
-    virtualenv.install_package('scikit-build', installer='pip')
+    virtualenv.run("pip install scikit-build")
     virtualenv.run("pip install %s" % sdists[0])
     assert "ninja" in virtualenv.installed_packages()
 
