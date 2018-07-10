@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.6)
 
 project(NinjaPythonDistributions)
 
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
+
 # Options
 set(_build_from_source_default ON)
 if((WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8) OR APPLE)
@@ -14,15 +16,11 @@ set(ARCHIVE_DOWNLOAD_DIR "${CMAKE_BINARY_DIR}" CACHE PATH "Directory where to do
 # Dependencies
 find_package(PythonInterp REQUIRED)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/NinjaUrls.cmake)
-
-message(STATUS "*********************************************")
-message(STATUS "Build Ninja from source: ${BUILD_FROM_SOURCE}")
-message(STATUS "*********************************************")
+include(NinjaUrls)
 
 #-----------------------------------------------------------------------------
 # Which archives ?
-
+#-----------------------------------------------------------------------------
 function(check_archive_var archive_var)
   if(NOT DEFINED "${archive_var}_url")
     message(FATAL_ERROR "Failed to determine which archive to download: '${archive_var}_url' variable is not defined")
@@ -54,6 +52,26 @@ endif()
 check_archive_var("${binary_archive}")
 
 #-----------------------------------------------------------------------------
+# Summary
+#-----------------------------------------------------------------------------
+message(STATUS "*********************************************")
+message(STATUS "Ninja Python Distribution")
+message(STATUS "")
+message(STATUS "  BUILD_FROM_SOURCE         : ${BUILD_FROM_SOURCE}")
+message(STATUS "  BUILD_VERBOSE             : ${BUILD_VERBOSE}")
+message(STATUS "")
+message(STATUS "  ARCHIVE_DOWNLOAD_DIR      : ${ARCHIVE_DOWNLOAD_DIR}")
+message(STATUS "")
+message(STATUS "    src_archive             : ${src_archive}")
+message(STATUS "    <src_archive>_url       : ${${src_archive}_url}")
+message(STATUS "    <src_archive>_sha256    : ${${src_archive}_sha256}")
+message(STATUS "")
+message(STATUS "    binary_archive          : ${binary_archive}")
+message(STATUS "    <binary_archive>_url    : ${${binary_archive}_url}")
+message(STATUS "    <binary_archive>_sha256 : ${${binary_archive}_sha256}")
+message(STATUS "*********************************************")
+
+#-----------------------------------------------------------------------------
 include(ExternalProject)
 
 set(ep_download_no_progress_args)
@@ -63,9 +81,9 @@ if(NOT BUILD_VERBOSE)
     )
 endif()
 
-#
-# Always expect the sources (needed for `sdist`)
-#
+#-----------------------------------------------------------------------------
+# Download source
+#-----------------------------------------------------------------------------
 if(NOT DEFINED Ninja_SOURCE_DIR)
   set(Ninja_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 
@@ -89,6 +107,9 @@ endif()
 
 if(BUILD_FROM_SOURCE)
 
+  #-----------------------------------------------------------------------------
+  # Build from source
+  #-----------------------------------------------------------------------------
   set(ninja_executable ${Ninja_SOURCE_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX})
   add_custom_command(
     COMMAND ${PYTHON_EXECUTABLE} configure.py --bootstrap
@@ -111,6 +132,9 @@ if(BUILD_FROM_SOURCE)
 
 else()
 
+  #-----------------------------------------------------------------------------
+  # Download pre-built archive
+  #-----------------------------------------------------------------------------
   if(${binary_archive}_sha256 STREQUAL "NA")
     message(FATAL_ERROR "Pre-built archives not available for '${binary_archive}'. Consider setting BUILD_FROM_SOURCE to ON.")
   endif()
@@ -134,4 +158,3 @@ endif()
 
 install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION ninja)
 install(PROGRAMS ${ninja_executable} DESTINATION ninja/data/bin)
-
