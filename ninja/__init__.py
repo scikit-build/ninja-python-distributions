@@ -21,8 +21,9 @@ DATA = os.path.join(os.path.dirname(__file__), 'data')
 
 # Support running tests from the source tree
 if not os.path.exists(DATA):
+    from skbuild.constants import CMAKE_INSTALL_DIR as SKBUILD_CMAKE_INSTALL_DIR
     _data = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), '../_skbuild/cmake-install/ninja/data'))
+        os.path.dirname(__file__), '..', SKBUILD_CMAKE_INSTALL_DIR, 'ninja/data'))
     if os.path.exists(_data):
         DATA = _data
 

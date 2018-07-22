@@ -1,6 +1,8 @@
 # This project
 src
 archive-cache
+ninja/ninja_syntax.py
+ninja/data/*
 _skbuild
 MANIFEST
 
@@ -33,6 +35,7 @@ pip-log.txt
 # Unit test / coverage reports
 .cache
 .coverage
+.pytest_cache
 .tox
 coverage.xml
 htmlcov
