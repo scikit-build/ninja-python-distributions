@@ -24,7 +24,6 @@ install:
   commands:
     - python -c "import sys; print(sys.version)"
     - python -m pip install --disable-pip-version-check --upgrade pip
-    - pip install -U setuptools
     - pip install -U -r requirements-dev.txt
 
 before_build:
