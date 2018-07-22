@@ -5,15 +5,12 @@ before_install:
   appveyor:
     environment:
       PATH: $<PYTHON_DIR>;$<PYTHON_DIR>\\Scripts;$<PATH>
-      RUN_ENV: .\\..\\addons\\appveyor\\run-with-visual-studio.cmd
     commands:
       - python ../addons/appveyor/patch_vs2008.py
 
   circle:
     environment:
       PATH: /opt/python/$<MANYLINUX_PYTHON>/bin:$<PATH>
-    commands:
-      - rm -rf dist/*
 
   travis:
     osx:
@@ -25,10 +22,10 @@ before_install:
 
 install:
   commands:
-    - python --version
+    - python -c "import sys; print(sys.version)"
     - python -m pip install --disable-pip-version-check --upgrade pip
     - pip install -U setuptools
-    - $<RUN_ENV> pip install -U -r requirements-dev.txt
+    - pip install -U -r requirements-dev.txt
 
 before_build:
   commands:
@@ -36,8 +33,17 @@ before_build:
 
 build:
   commands:
+    # Source distribution
     - python setup.py --hide-listing sdist
-    - $<RUN_ENV> python setup.py --hide-listing bdist_wheel $<SETUP_BDIST_WHEEL_ARGS>
+    # Built distribution (wheel)
+    - python setup.py --hide-listing bdist_wheel $<SETUP_BDIST_WHEEL_ARGS> -- $<SETUP_CMAKE_ARGS>
+    # Cleanup
+    - python: |
+              import glob, os
+              if os.environ.get("UPLOAD_SDIST", "") == "":
+                  sdist=(glob.glob("dist/*.tar.gz") + glob.glob("dist/*.zip"))[0]
+                  print("Deleting [%s]" % sdist)
+                  os.remove(sdist)
 
   circle:
     commands:
@@ -56,15 +62,3 @@ test:
 after_test:
   commands:
     - codecov -X gcov --required --file ./tests/coverage.xml
-    - pip install girder-client==2.0.0
-    - python: |
-              import girder_client, os, subprocess
-              if 'GIRDER_TOKEN' in os.environ:
-                  token = os.environ['GIRDER_TOKEN']
-                  subprocess.check_call(
-                    "python -m girder_client --api-url https://data.kitware.com/api/v1 --api-key {token} \
-                      upload --parent-type collection --reuse 583dc85c8d777f5cdd825bd6 ./dist/".format(token=token),
-                    shell=True)
-              else:
-                  print("Skipping upload: GIRDER_TOKEN environment variable is not set")
-    - python setup.py clean
