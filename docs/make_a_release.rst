@@ -2,58 +2,38 @@
 How to Make a Release
 =====================
 
-*Follow the steps below after making sure all tests pass*
-
 A core developer should use the following steps to create a release of
-**ninja-python-distributions**.
+**ninja-python-distributions**. This is usually done after :ref:`updating_ninja_version`.
 
-0. Configure `~/.pypirc` as described `here <https://packaging.python.org/distributing/#uploading-your-project-to-pypi>`_.
+1. Make sure that all CI tests are passing: `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
 
-1. Make sure that all CI tests are passing: `AppVeyor <https://ci.appveyor.com/project/scikit-build/ninja-python-distributions>`_,
-   `CircleCI <https://circleci.com/gh/scikit-build/ninja-python-distributions>`_
-   and `TravisCi <https://travis-ci.org/scikit-build/ninja-python-distributions/pull_requests>`_.
-
-2. Tag the release. Requires a GPG key with signatures. For version *X.Y.Z*::
+2. Tag the release. For version *X.Y.Z*::
 
     release=X.Y.Z
     git tag -s -m "ninja-python-distributions ${release}" ${release} origin/master
 
-3. Clear the content of `dist <https://data.kitware.com/#collection/583dc85c8d777f5cdd825bd6/folder/583dc8658d777f5cdd825bd7>`_ folder
-   associated with the collection `Ninja Python Distributions` hosted on https://data.kitware.com.
-
-4. Push the tag::
+3. Push the tag::
 
     git push origin ${release}
 
-5. If needed, explicitly trigger a build on each CI services, and wait for all wheels and source
-   distribution to be uploaded into the `dist <https://data.kitware.com/#collection/583dc85c8d777f5cdd825bd6/folder/583dc8658d777f5cdd825bd7>`_
-   folder.
+  .. note:: This will trigger builds on each CI services and automatically upload the wheels \
+            and source distribution on `PyPI`_.
 
-6. Download locally the source distribution and all the wheels::
+4. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
 
-    rm -rf ./dist/
-    pip install girder-client
-    girder-cli --api-key API_KEY  \
-      --api-url https://data.kitware.com/api/v1 download \
-      --parent-type folder 583dc8658d777f5cdd825bd7 ./dist/
+5. Once the builds are completed, check that the distributions are available on `PyPI`_.
 
+6. Finally, make sure the package can be installed::
 
-7. Upload the packages to the testing PyPI instance::
-
-    pip install -U twine
-    twine upload --sign -r pypitest dist/*
-
-8. Check the `PyPI testing package page <https://test.pypi.org/project/ninja/>`_.
-
-9. Upload the packages to the PyPI instance::
-
-    twine upload --sign dist/*
-
-10. Check the `PyPI package page <https://pypi.org/project/ninja/>`_.
-
-11. Make sure the package can be installed::
-
-    mkvirtualenv test-pip-install
+    mkvirtualenv test-install
     pip install ninja
     ninja --version
-    rmvirtualenv test-pip-install
+    deactivate
+    rmvirtualenv test-install
+
+
+.. _AppVeyor: https://ci.appveyor.com/project/scikit-build/ninja-python-distributions-f3rbb/history
+.. _CircleCI: https://circleci.com/gh/scikit-build/ninja-python-distributions
+.. _TravisCi: https://travis-ci.org/scikit-build/ninja-python-distributions/pull_requests
+
+.. _PyPI: https://pypi.org/project/ninja

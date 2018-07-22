@@ -1,20 +1,23 @@
-====================
-Update Ninja version
-====================
+.. _updating_ninja_version:
+
+==========================
+Updating the Ninja version
+==========================
 
 A developer should use the following steps to update the version ``X.Y.Z``
 of Ninja associated with the current Ninja python distributions.
 
 Available Ninja archives can be found `here <https://github.com/ninja-build/ninja/releases>`_.
 
-1. Create a new topic::
+1. Install `requests` and `githubrelease`::
 
-    $ git checkout -b update-to-ninja-X.Y.Z
+    $ pip install requests githubrelease
 
 2. Execute `scripts/update_ninja_version.py` command line tool with the desired
    ``X.Y.Z`` Ninja version available for download. For example::
 
-    $ python scripts/update_ninja_version.py 1.8.2
+    $ release=1.8.2
+    $ python scripts/update_ninja_version.py ${release}
 
     Collecting URLs and SHA256s from 'https://github.com/ninja-build/ninja/releases'
     Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.tar.gz
@@ -34,15 +37,17 @@ Available Ninja archives can be found `here <https://github.com/ninja-build/ninj
     Updating README.rst - done
     Updating docs/update_ninja_version.rst
     Updating docs/update_ninja_version.rst - done
-    Updating docs/update_ninja_version.rst
-    Updating docs/update_ninja_version.rst - done
-    Updating tests/test_wheel.py
-    Updating tests/test_wheel.py - done
+    Updating tests/test_distribution.py
+    Updating tests/test_distribution.py - done
 
 
-3. Commit the changes::
+3. Create a topic named `update-to-ninja-X.Y.Z` and commit the changes.
+   For example::
 
-    $ git commit -a -m "Update to Ninja 1.8.2"
+    release=1.8.2
+    git checkout -b update-to-ninja-${release}
+    git add NinjaUrls.cmake README.rst docs/update_ninja_version.rst tests/test_distribution.py
+    git commit -m "Update to Ninja ${release}"
 
 4. Create a `Pull Request`.
 
