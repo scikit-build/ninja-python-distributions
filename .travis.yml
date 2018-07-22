@@ -1,7 +1,7 @@
-
 branches:
  only:
   - master
+  - /^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$/
 
 language: python
 
@@ -43,8 +43,9 @@ cache:
     - $HOME/downloads
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir $HOME/bin; ln -s $(which pip2) $HOME/bin/pip; fi
-  - pip install scikit-ci==0.13.0 scikit-ci-addons==0.11.0
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir $HOME/bin; ln -s $(which pip2) $HOME/bin/pip; ln -s $(which python2) $HOME/bin/python; fi
+  - python -m pip install --disable-pip-version-check --upgrade pip
+  - pip install -U scikit-ci scikit-ci-addons
   - ci_addons --install ../addons
 
 install:
@@ -55,6 +56,26 @@ script:
 
 after_success:
   - ci after_test
+
+deploy:
+  # deploy-release
+  - provider: script
+    script: pwd && ls dist;echo "deploy-release" && ~/.pyenv/versions/${PYTHON_VERSION}/bin/twine -u $PYPI_USER -p $PYPI_PASSWORD --skip-existing dist/*
+    skip_cleanup: true
+    on:
+      repo: ${TRAVIS_REPO_SLUG}
+      tags: true
+  # deploy-master
+  - provider: script
+    script: pwd && ls dist;echo "deploy-master" && echo "not implemented"
+    skip_cleanup: true
+    on:
+      repo: ${TRAVIS_REPO_SLUG}
+      branch: master
+
 env:
   global:
-    secure: sgcVf6bqGdG6xg0wNKzYPbFekcW5O5y0TBGki+NPh3OtdFiQGkTEVaY/hAhjxsl5UEVIuOItj0RHz99CcKUzdGjQkC7AielE7/6yNrXJDXjXhpXqJhnrDmkLS4VZUdLu+h3uzum5mU+jrGn8yvpuFctTvHI7r2GYGyreBtX6iwNXPP+MgVpb5OX6TH70knu2hSfnG7464tAKk77zFZc13hARWma4cO1Ax6iuKetEOL39raVqskGvMnzMzh98DmWYqkMwCzPNpV30C16j8yXNjQ9JKExvHv90lrZCC/ZI5xJkjO9VLR5onYVz/lYwMWB2lO6zBh66I4r9K39hCk15BPalINah3oryONCAEmjNpU5mOZfRlqqXMl/1vVlJf/wHwdqN851JpTgdyQ+iTiPvC1Je16SbK74dSm9T7nlMQkCIZJmIDiSpljDlBzpGZtiXBKEXYcCJSn5hEAeW34SP4h5kgFeFF4W0hLgZWjBOj+0WEwrIy0hobJ/UxhXkZkDcB7Q26QeCFz52K+la9qjh1zyUV5iHpIDlUhOEJ8pMGSmVmOw6k5h0+V4hNei3Hbi4KQu+GfYpmNNVfx1Dxx+/In1F02nT5s662CsrdgBPwzqsFtJBGylcEkiDUuKZ6Q7l5AjMK6bhbLh6dg5ejWaw2d+pCT/5orZk0HP006jwdF0=
+    # PYPI_USER
+    - secure: "Xejg5qGnAyo3G+/TaaAr1uHzDv9GLo3mxi6Aw/hZc9gF9lYix1TvkfE6GEBKdPgSLJSqF9NJrwKTt37XH1DjSRLG+qw6Bt1goi5Bkugdk+SC5qmMkvAoG0EKyD119WS4ObrpzqAFcOQqG+4F6iDkSuJLA+dzA3yAzTME4pkhr/2dn0krOSqIcTlgifPwhEaMgo//WRT2dEBM5dWoehXsEMD7VMOUyC0DlV15lKTPKSzTrDEUPU7UFnXgIqZM/brEPbWPQr5Jzgu7BeBk6bmPiiYeh28Cq2juzOzA+JWcGgJmXOfsImYwYuAWZrf0pkE0uQjLySvIBKT7phJv05eNqIxmv/wHK1BPcyMV+2IgFR4+f5ty6C4VUV0hT0HvHr3pMa/8A/5wSNCShEAMTHrwPM5VPWFJtUKTtS5+wwNQDI39MLk/vr9ZTo+y3WJHPaRR0nRpbA3nXFHSqoJJunoMyeI8x9cXZvJ9IENMxGuo3CfBT5RGZamfqSTgn6NjL51ArIMKpvUfm3tXTtlvCHenED1ZQeJI1nWZEalxl8pTyAZoA8S1+h8wraZrUPzhM0QuVpw7vZQeOYu2VSdHO46yxUWoQyb+JWrDTN7EC8vOl7QQzIQlqOWJB5uDJD7UlKKtneTHJrdfXvGxS/hf+Y+hFZK7r+/PDPS6aQjSNDyy+js="
+    # PYPI_PASSWORD
+    - secure: "iEHYaOC/yivDupsbRzohWYCwFMZbCfT2hYOM96akQtOfd1d37rqFCFjDKr3BNyvHyHzj+uNQ7IblynWAqu3cax2Z8b9YuIFXFAslD76IIgeIhxmi8jPtamMK0NBXam/LEL49EIVXUnwVZrWjnLcJxVaBHGS/9Ft3zWP5Gspa4G1yAJDhNfs+jrFipxO4DOBie9mGI2jFdbFRgcCYoY6Jo4y95zxUG1YF5e+8sUobLoBgVqyaJP4SP/Zu/4CEWMfJev8EjLBzzkoPwOU+hC09qwf2FQCvBXFrudpjPpY23WDFeKf+LcMoW9tIoUmP6UJcQibqHeidimrbo9jST0+wTo1NYjrvriKrlMho/QS4iYkd5N6DGUrhSXEMSiqfdMjVGDZ00wvCsT3DwqE9eG7K+Kw09enchjcZcggZIt9crqZPJg3GMdSwPYTlRpf2OQmE4OHL3pN5dSH5Es/sb0X1G6JQgB/2Ia9Aks2ywYEdzUZhbMqfLVx75bVS4bLfYMAMhE/j7NxpYaUlVkFhz3srLhnrYyAcvCQ6XF4cSeFfxD1ie62/qFIF/QH5u76t91uURHygvNdyJCNHhVJnnWgN9kPsJxfyfdOC2Dnrz/jJcw5irsgQVO2/K4iyGyBVoOqwwpymjoCkxB8capEoLRNLcwyQqCTBnMtGykyRYF2I7FA="

@@ -1,7 +1,7 @@
-
 branches:
- only:
-  - master
+  only:
+    - master
+    - /^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$/
 
 version: "0.0.1.{build}"
 
@@ -49,21 +49,26 @@ environment:
       PYTHON_ARCH: "64"
       BLOCK: "0"
 
-#    - PYTHON_DIR: "C:\\Python37"
-#      PYTHON_VERSION: "3.7.x"
-#      PYTHON_ARCH: "64"
-#      BLOCK: "0"
-#
-#    - PYTHON_DIR: "C:\\Python37-x64"
-#      PYTHON_VERSION: "3.7.x"
-#      PYTHON_ARCH: "64"
-#      BLOCK: "0"
+    - PYTHON_DIR: "C:\\Python37"
+      PYTHON_VERSION: "3.7.x"
+      PYTHON_ARCH: "64"
+      BLOCK: "0"
 
-  GIRDER_TOKEN:
-    secure: BJR/8+Z51IgDgkwnKVkmzxxP315kpgy6r952X3P03bIe0YTNo1ZeOSeqqEvJwFQF
+    - PYTHON_DIR: "C:\\Python37-x64"
+      PYTHON_VERSION: "3.7.x"
+      PYTHON_ARCH: "64"
+      BLOCK: "0"
+
+  PYPI_USER:
+    secure: j/nubIi1eucjCtYuwpykWg==
+  PYPI_PASSWORD:
+    secure: qDoPKmtLMdcKUKRHuTlfaajjzO4Q4yu25FM5JuB7z84=
+
+cache:
+  - C:\\cmake-3.6.2
 
 init:
-  - python -m pip install scikit-ci==0.13.0 scikit-ci-addons==0.11.0
+  - python -m pip install -U scikit-ci scikit-ci-addons
   - python -m ci_addons --install ../addons
 
   - ps: ../addons/appveyor/rolling-build.ps1
@@ -82,6 +87,17 @@ after_test:
 
 on_finish:
   - ps: ../addons/appveyor/enable-worker-remote-access.ps1 -check_for_block
+
+deploy_script:
+  - ps: |
+      if ($env:appveyor_repo_tag -eq $true -and $env:appveyor_repo_tag_name –match "^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$") {
+        Write-Host "deploy release"
+        twine upload -u $env:PYPI_USER -p $env:PYPI_PASSWORD --skip-existing dist/*
+      } elseif ($env:appveyor_repo_branch -eq "master") {
+         Write-Host "deploy master (not implemented)"
+      } else {
+        Write-Host "nothing to deploy"
+      }
 
 matrix:
   fast_finish: false
