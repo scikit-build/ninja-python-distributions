@@ -1,35 +1,149 @@
-=====================
-How to Make a Release
-=====================
+.. _making_a_release:
 
-A core developer should use the following steps to create a release of
-**ninja-python-distributions**. This is usually done after :ref:`updating_ninja_version`.
+================
+Making a release
+================
 
-1. Make sure that all CI tests are passing: `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
+A core developer should use the following steps to create a release `X.Y.Z` of
+**ninja-python-distributions** on `PyPI`_.
 
-2. Tag the release. For version *X.Y.Z*::
+This is usually done after :ref:`updating_ninja_version`.
 
-    release=X.Y.Z
-    git tag -s -m "ninja-python-distributions ${release}" ${release} origin/master
+-------------
+Prerequisites
+-------------
 
-3. Push the tag::
+* All CI tests are passing on `AppVeyor`_, `CircleCI`_ and `Travis CI`_.
 
-    git push origin ${release}
+* You have a `GPG signing key <https://help.github.com/articles/generating-a-new-gpg-key/>`_.
+
+-------------------------
+Documentation conventions
+-------------------------
+
+The commands reported below should be evaluated in the same terminal session.
+
+Commands to evaluate starts with a dollar sign. For example::
+
+  $ echo "Hello"
+  Hello
+
+means that ``echo "Hello"`` should be copied and evaluated in the terminal.
+
+----------------------
+Setting up environment
+----------------------
+
+1. First, `register for an account on PyPI <https://pypi.org>`_.
+
+
+2. If not already the case, ask to be added as a ``Package Index Maintainer``.
+
+
+3. Create a ``~/.pypirc`` file with your login credentials::
+
+    [distutils]
+    index-servers =
+      pypi
+      pypitest
+
+    [pypi]
+    username=<your-username>
+    password=<your-password>
+
+    [pypitest]
+    repository=https://test.pypi.org/legacy/
+    username=<your-username>
+    password=<your-password>
+
+  where ``<your-username>`` and ``<your-password>`` correspond to your PyPI account.
+
+
+---------------------
+`PyPI`_: Step-by-step
+---------------------
+
+1. Make sure that all CI tests are passing on `AppVeyor`_, `CircleCI`_ and `Travis CI`_.
+
+
+2. Download the latest sources
+
+  .. code::
+
+    $ cd /tmp && \
+      git clone git@github.com:scikit-build/ninja-python-distributions ninja-python-distributions-release && \
+      cd ninja-python-distributions-release
+
+3. List all tags sorted by version
+
+  .. code::
+
+    $ git fetch --tags && \
+      git tag -l | sort -V
+
+
+4. Choose the next release version number
+
+  .. code::
+
+    $ release=X.Y.Z
+
+  .. warning::
+
+      To ensure the packages are uploaded on `PyPI`_, tags must match this regular
+      expression: ``^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$``.
+
+
+5. Tag the release
+
+  .. code::
+
+    $ git tag --sign -m "ninja-python-distributions ${release}" ${release} origin/master
+
+  .. warning::
+
+      We recommend using a `GPG signing key <https://help.github.com/articles/generating-a-new-gpg-key/>`_
+      to sign the tag.
+
+
+6. Publish the release tag
+
+  .. code::
+
+    $ git push origin ${release}
 
   .. note:: This will trigger builds on each CI services and automatically upload the wheels \
             and source distribution on `PyPI`_.
 
-4. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
+7. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
 
-5. Once the builds are completed, check that the distributions are available on `PyPI`_.
+8. Once the builds are completed, check that the distributions are available on `PyPI`_.
 
-6. Finally, make sure the package can be installed::
+9. Create a clean testing environment to test the installation
 
-    mkvirtualenv test-install
-    pip install ninja
-    ninja --version
-    deactivate
-    rmvirtualenv test-install
+  .. code::
+
+    $ mkvirtualenv ninja-${release}-install-test && \
+      pip install ninja && \
+      ninja --version
+
+  .. note::
+
+      If the ``mkvirtualenv`` command is not available, this means you do not have `virtualenvwrapper`_
+      installed, in that case, you could either install it or directly use `virtualenv`_ or `venv`_.
+
+10. Cleanup
+
+  .. code::
+
+    $ deactivate  && \
+      rm -rf dist/* && \
+      rmvirtualenv ninja-${release}-install-test
+
+
+.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/
+.. _virtualenv: http://virtualenv.readthedocs.io
+.. _venv: https://docs.python.org/3/library/venv.html
 
 
 .. _AppVeyor: https://ci.appveyor.com/project/scikit-build/ninja-python-distributions-f3rbb/history
