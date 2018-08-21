@@ -26,7 +26,7 @@ ROOT_DIR = os.path.join(os.path.dirname(__file__), "..")
 
 REQ_BUFFER_SIZE = 65536  # Chunk size when iterating a download body
 
-NINJA_RELEASES_GITHUB_REPO = "ninja-build/ninja"
+NINJA_RELEASES_GITHUB_REPO = "kitware/ninja"
 
 NINJA_SRC_ARCHIVE_URL_TEMPLATE = \
     "https://github.com/" + NINJA_RELEASES_GITHUB_REPO + "/archive/%s"
@@ -108,11 +108,18 @@ def get_ninja_archive_urls_and_sha256s(version):
                 tag_name + ".zip")
         }
 
-        expected = {
-            "ninja-linux.zip": "linux64_binary",
-            "ninja-mac.zip": "macosx_binary",
-            "ninja-win.zip": "win64_binary",
-        }
+        if NINJA_RELEASES_GITHUB_REPO == "ninja-build/ninja":
+            expected = {
+                "ninja-linux.zip": "linux64_binary",
+                "ninja-mac.zip": "macosx_binary",
+                "ninja-win.zip": "win64_binary",
+            }
+        else:
+            expected = {
+                "ninja-%s_x86_64-linux-gnu.tar.gz" % version: "linux64_binary",
+                "ninja-%s_x86_64-apple-darwin.tar.gz" % version: "macosx_binary",
+                "ninja-%s_i686-pc-windows-msvc.zip" % version: "win64_binary",
+            }
 
         found = 0
         for asset in release["assets"]:
@@ -180,9 +187,9 @@ def update_cmake_urls_script(version):
         cmake_file.write(content)
 
 
-def _update_file(filepath, regex, replacement):
+def _update_file(filepath, regex, replacement, verbose=True):
     msg = "Updating %s" % os.path.relpath(filepath, ROOT_DIR)
-    with _log(msg):
+    with _log(msg, verbose=verbose):
         pattern = re.compile(regex)
         with open(filepath, 'r') as doc_file:
             lines = doc_file.readlines()
@@ -195,21 +202,33 @@ def _update_file(filepath, regex, replacement):
 
 
 def update_docs(version):
-    pattern = re.compile(r"ninja \d.\d.\d")
+    pattern = re.compile(r"ninja \d.\d.\d(\.[\w\-]+)*")
     replacement = "ninja %s" % version
     _update_file(
         os.path.join(ROOT_DIR, "README.rst"),
         pattern, replacement)
 
-    pattern = re.compile(r"\d.\d.\d")
+    pattern = re.compile(r"(?<=v)\d.\d.\d(?:\.[\w\-]+)*(?=(?:\.zip|\.tar\.gz|\/))")
     replacement = version
     _update_file(
         os.path.join(ROOT_DIR, "docs/update_ninja_version.rst"),
         pattern, replacement)
 
+    pattern = re.compile(r"(?<!v)\d.\d.\d(?:\.[\w\-]+)*")
+    replacement = version
+    _update_file(
+        os.path.join(ROOT_DIR, "docs/update_ninja_version.rst"),
+        pattern, replacement, verbose=False)
+
+    pattern = re.compile(r"github\.com\/[\w\-_]+\/[\w\-_]+(?=\/(?:release|archive))")
+    replacement = "github.com/" + NINJA_RELEASES_GITHUB_REPO
+    _update_file(
+        os.path.join(ROOT_DIR, "docs/update_ninja_version.rst"),
+        pattern, replacement, verbose=False)
+
 
 def update_tests(version):
-    pattern = re.compile(r'expected_version = "\d.\d.\d"')
+    pattern = re.compile(r'expected_version = "\d.\d.\d(\.[\w\-]+)*"')
     replacement = 'expected_version = "%s"' % version
     _update_file(os.path.join(
         ROOT_DIR, "tests/test_distribution.py"), pattern, replacement)
