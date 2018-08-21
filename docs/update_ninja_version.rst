@@ -7,7 +7,7 @@ Updating the Ninja version
 A developer should use the following steps to update the version ``X.Y.Z``
 of Ninja associated with the current Ninja python distributions.
 
-Available Ninja archives can be found `here <https://github.com/ninja-build/ninja/releases>`_.
+Available Ninja archives can be found `here <https://github.com/kitware/ninja/releases>`_.
 
 1. Install `requests` and `githubrelease`::
 
@@ -16,23 +16,23 @@ Available Ninja archives can be found `here <https://github.com/ninja-build/ninj
 2. Execute `scripts/update_ninja_version.py` command line tool with the desired
    ``X.Y.Z`` Ninja version available for download. For example::
 
-    $ release=1.8.2
+    $ release=1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1
     $ python scripts/update_ninja_version.py ${release}
 
-    Collecting URLs and SHA256s from 'https://github.com/ninja-build/ninja/releases'
-    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.tar.gz
-    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.tar.gz - done
-    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.zip
-    Downloading https://github.com/ninja-build/ninja/archive/v1.8.2.zip - done
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip - done
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-mac.zip
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-mac.zip - done
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip
-    Downloading https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip - done
-    Collecting URLs and SHA256s from 'https://github.com/ninja-build/ninja/releases' - done
-    Updating 'NinjaUrls.cmake' with CMake version 1.8.2
-    Updating 'NinjaUrls.cmake' with CMake version 1.8.2 - done
+    Collecting URLs and SHA256s from 'https://github.com/kitware/ninja/releases'
+    Downloading https://github.com/kitware/ninja/archive/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1.tar.gz
+    Downloading https://github.com/kitware/ninja/archive/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1.tar.gz - done
+    Downloading https://github.com/kitware/ninja/archive/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1.zip
+    Downloading https://github.com/kitware/ninja/archive/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1.zip - done
+    Downloading https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_i686-pc-windows-msvc.zip
+    Downloading https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_i686-pc-windows-msvc.zip - done
+    Downloading https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-apple-darwin.tar.gz
+    Downloading https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-apple-darwin.tar.gz - done
+    Downloading https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz
+    Downloading https://github.com/Kitware/ninja/releases/download/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1/ninja-1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz - done
+    Collecting URLs and SHA256s from 'https://github.com/kitware/ninja/releases' - done
+    Updating 'NinjaUrls.cmake' with CMake version 1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1
+    Updating 'NinjaUrls.cmake' with CMake version 1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1 - done
     Updating README.rst
     Updating README.rst - done
     Updating docs/update_ninja_version.rst
@@ -44,7 +44,7 @@ Available Ninja archives can be found `here <https://github.com/ninja-build/ninj
 3. Create a topic named `update-to-ninja-X.Y.Z` and commit the changes.
    For example::
 
-    release=1.8.2
+    release=1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1
     git checkout -b update-to-ninja-${release}
     git add NinjaUrls.cmake README.rst docs/update_ninja_version.rst tests/test_distribution.py
     git commit -m "Update to Ninja ${release}"
