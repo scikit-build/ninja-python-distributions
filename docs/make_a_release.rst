@@ -94,7 +94,20 @@ Setting up environment
       expression: ``^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$``.
 
 
-5. Tag the release
+5. In `README.rst`, update `PyPI`_ download count after running `this big table query <https://bigquery.cloud.google.com/savedquery/280188050539:96d2278f73554f65bd7468a5863e7ad9>`_
+   and commit the changes.
+
+  .. code::
+
+    $ git add README.rst && \
+      git commit -m "README: Update download stats [ci skip]"
+
+  ..  note::
+
+    To learn more about `pypi-stats`, see `How to get PyPI download statistics <https://kirankoduru.github.io/python/pypi-stats.html>`_.
+
+
+6. Tag the release
 
   .. code::
 
@@ -106,7 +119,7 @@ Setting up environment
       to sign the tag.
 
 
-6. Publish the release tag
+7. Publish the release tag
 
   .. code::
 
@@ -115,15 +128,16 @@ Setting up environment
   .. note:: This will trigger builds on each CI services and automatically upload the wheels \
             and source distribution on `PyPI`_.
 
-7. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
+8. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
 
-8. Once the builds are completed, check that the distributions are available on `PyPI`_.
+9. Once the builds are completed, check that the distributions are available on `PyPI`_.
 
-9. Create a clean testing environment to test the installation
+10. Create a clean testing environment to test the installation
 
   .. code::
 
     $ mkvirtualenv ninja-${release}-install-test && \
+      mkvirtualenv ninja-${release}-install-test && \
       pip install ninja && \
       ninja --version
 
@@ -132,11 +146,12 @@ Setting up environment
       If the ``mkvirtualenv`` command is not available, this means you do not have `virtualenvwrapper`_
       installed, in that case, you could either install it or directly use `virtualenv`_ or `venv`_.
 
-10. Cleanup
+11. Cleanup
 
   .. code::
 
-    $ deactivate  && \
+    $ popd && \
+      deactivate  && \
       rm -rf dist/* && \
       rmvirtualenv ninja-${release}-install-test
 
