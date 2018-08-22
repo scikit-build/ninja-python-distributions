@@ -7,6 +7,12 @@ set(unix_source_sha256    "121c432cec32c8aea730a71a256a81442ac8446c6f0e7652ea312
 set(windows_source_url    "https://github.com/kitware/ninja/archive/v1.8.2.g3bbbe.kitware.dyndep-1.jobserver-1.zip")
 set(windows_source_sha256 "01a2bb09bb2f6e6c0e4c9634e0491ad137fde80c3e99de581ee311401d07976a")
 
+if(MSVC AND (MSVC_VERSION EQUAL 1600 OR MSVC_VERSION LESS 1600))
+  # Fix compilation using "Microsoft Visual C++ Compiler for Python 2.7" or "Visual Studio 2010"
+  set(windows_source_url    "https://github.com/jcfr/ninja/archive/kitware-staged-features-support-vs2008-vs2010.zip")
+  set(windows_source_sha256 "d64d6ae2eaeed28832e9a9c28901b01f9d070d3f440346e585f68d490447f262")
+endif()
+
 #-----------------------------------------------------------------------------
 # Ninja binaries
 set(linux32_binary_url    "NA")  # Linux 32-bit binaries not available
