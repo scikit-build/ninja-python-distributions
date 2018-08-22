@@ -9,6 +9,18 @@ and `ninja_syntax.py` for generating `.ninja` files.
 
 .. image:: https://raw.githubusercontent.com/scikit-build/ninja-python-distributions/master/ninja-python-distributions-logo.png
 
+Latest Release
+--------------
+
+.. table::
+
+  +----------------------------------------------------------------------+---------------------------------------------------------------------------+
+  | Versions                                                             | Downloads                                                                 |
+  +======================================================================+===========================================================================+
+  | .. image:: https://img.shields.io/pypi/v/ninja.svg                   | .. image:: https://img.shields.io/badge/downloads-135k%20total-green.svg  |
+  |     :target: https://pypi.python.org/pypi/ninja                      |     :target: https://pypi.python.org/pypi/ninja                           |
+  +----------------------------------------------------------------------+---------------------------------------------------------------------------+
+
 Build Status
 ------------
 
