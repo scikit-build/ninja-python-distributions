@@ -128,7 +128,7 @@ Setting up environment
   .. note:: This will trigger builds on each CI services and automatically upload the wheels \
             and source distribution on `PyPI`_.
 
-8. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `TravisCi`_.
+8. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `Travis CI`_.
 
 9. Once the builds are completed, check that the distributions are available on `PyPI`_.
 
@@ -136,7 +136,7 @@ Setting up environment
 
   .. code::
 
-    $ mkvirtualenv ninja-${release}-install-test && \
+    $ pushd $(mktemp -d) && \
       mkvirtualenv ninja-${release}-install-test && \
       pip install ninja && \
       ninja --version
@@ -163,6 +163,6 @@ Setting up environment
 
 .. _AppVeyor: https://ci.appveyor.com/project/scikit-build/ninja-python-distributions-f3rbb/history
 .. _CircleCI: https://circleci.com/gh/scikit-build/ninja-python-distributions
-.. _TravisCi: https://travis-ci.org/scikit-build/ninja-python-distributions/pull_requests
+.. _Travis CI: https://travis-ci.org/scikit-build/ninja-python-distributions/pull_requests
 
 .. _PyPI: https://pypi.org/project/ninja
