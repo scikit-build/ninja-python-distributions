@@ -2,7 +2,7 @@
 import os
 import pytest
 
-from path import Path
+from path import Path, matchers
 
 DIST_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../dist'))
 
@@ -18,7 +18,7 @@ def _check_ninja_install(virtualenv):
 
 @pytest.mark.skipif(not Path(DIST_DIR).exists(), reason="dist directory does not exist")
 def test_source_distribution(virtualenv):
-    sdists = Path(DIST_DIR).files(pattern="*.tar.gz")
+    sdists = Path(DIST_DIR).files(match=matchers.CaseInsensitive("*.tar.gz"))
     if not sdists:
         pytest.skip("no source distribution available")
     assert len(sdists) == 1
@@ -32,7 +32,7 @@ def test_source_distribution(virtualenv):
 
 @pytest.mark.skipif(not Path(DIST_DIR).exists(), reason="dist directory does not exist")
 def test_wheel(virtualenv):
-    wheels = Path(DIST_DIR).files(pattern="*.whl")
+    wheels = Path(DIST_DIR).files(match=matchers.CaseInsensitive("*.whl"))
     if not wheels:
         pytest.skip("no wheel available")
     assert len(wheels) == 1
