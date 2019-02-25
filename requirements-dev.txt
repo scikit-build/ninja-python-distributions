@@ -10,4 +10,4 @@ scikit-build>=0.7.1
 setuptools>=28.0.0
 twine
 virtualenv>=15.0.3
-wheel
+wheel==0.31.1
