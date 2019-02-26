@@ -17,7 +17,7 @@ Latest Release
   +----------------------------------------------------------------------+---------------------------------------------------------------------------+
   | Versions                                                             | Downloads                                                                 |
   +======================================================================+===========================================================================+
-  | .. image:: https://img.shields.io/pypi/v/ninja.svg                   | .. image:: https://img.shields.io/badge/downloads-135k%20total-green.svg  |
+  | .. image:: https://img.shields.io/pypi/v/ninja.svg                   | .. image:: https://img.shields.io/badge/downloads-461k%20total-green.svg  |
   |     :target: https://pypi.python.org/pypi/ninja                      |     :target: https://pypi.python.org/pypi/ninja                           |
   +----------------------------------------------------------------------+---------------------------------------------------------------------------+
 
