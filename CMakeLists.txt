@@ -111,8 +111,14 @@ if(BUILD_FROM_SOURCE)
   # Build from source
   #-----------------------------------------------------------------------------
   set(ninja_executable ${Ninja_SOURCE_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX})
+
+  set(bootstrap_command ${PYTHON_EXECUTABLE} configure.py --bootstrap)
+  # Explicitly defining _BSD_SOURCE is required to support building the wheel on Alpine. See issue  #22
+  if(UNIX AND NOT APPLE)
+    set(bootstrap_command ${CMAKE_COMMAND} -E env CXXFLAGS=-D_BSD_SOURCE ${bootstrap_command})
+  endif()
   add_custom_command(
-    COMMAND ${PYTHON_EXECUTABLE} configure.py --bootstrap
+    COMMAND ${bootstrap_command}
     OUTPUT ${ninja_executable}
     WORKING_DIRECTORY ${Ninja_SOURCE_DIR}
     )
