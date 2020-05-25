@@ -24,6 +24,12 @@ install:
   commands:
     - python -c "import sys; print(sys.version)"
     - python -m pip install --disable-pip-version-check --upgrade pip
+    - pip install -U wheel
+    - which yum && yum install redhat-rpm-config gcc python-devel openssl-devel -y || echo -n
+    - which wget && wget -O /tmp/openssl-devel.rpm http://mirrors.kernel.org/fedora-buffet/archive/epel/5/i386/openssl101e-devel-1.0.1e-11.el5.i386.rpm || echo -n
+    - which rpm && rpm -ivh --nodeps --force /tmp/openssl-devel.rpm || echo -n
+    - which find && find /usr/include/openssl101e/openssl/*h -type f -exec mv -v {} /usr/include/openssl/ \; || echo -n
+    - pip install cryptography
     - pip install git+https://github.com/jcfr/wheeltools.git@wheeltools-2018-10-28-a2f174d0e
     - pip install -U -r requirements-dev.txt
 

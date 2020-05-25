@@ -33,8 +33,7 @@ def _to_generic_pyver(pyver_tags):
 
     For example::
 
-        cp35 -> py3
-        cp27 -> py2
+        cp37 -> py3
 
     See https://www.python.org/dev/peps/pep-0425/#python-tag
     """
