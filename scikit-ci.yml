@@ -11,6 +11,8 @@ before_install:
   circle:
     environment:
       PATH: /opt/python/$<MANYLINUX_PYTHON>/bin:$<PATH>
+      # Required to build cryptography wheel from source for cp37-cp37 when using manylinux-x86
+      CFLAGS: -I/usr/local/ssl/include -L/usr/local/ssl/lib
 
   travis:
     osx:
