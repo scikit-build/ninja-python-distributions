@@ -228,6 +228,13 @@ def update_docs(version):
 
 
 def update_tests(version):
+    # Given a version string of the form "x.y.z[.gSHA{5}][.<qualifier>[.<qualifier>]]", replace
+    # ".gSHA{5}" if "git"
+    parts = version.split(".")
+    if len(parts) > 3:
+        parts[3] = "git"
+        version = ".".join(parts)
+
     pattern = re.compile(r'expected_version = "\d.\d.\d(\.[\w\-]+)*"')
     replacement = 'expected_version = "%s"' % version
     _update_file(os.path.join(
