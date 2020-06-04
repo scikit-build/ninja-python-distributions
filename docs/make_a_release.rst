@@ -94,17 +94,17 @@ Setting up environment
       expression: ``^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$``.
 
 
-5. In `README.rst`, update `PyPI`_ download count after running `this big table query <https://bigquery.cloud.google.com/savedquery/280188050539:96d2278f73554f65bd7468a5863e7ad9>`_
+5. In `README.rst`, update `PyPI`_ download count after running ``pypistats overall ninja``
    and commit the changes.
 
   .. code::
 
     $ git add README.rst && \
-      git commit -m "README: Update download stats [ci skip]"
+      git commit -m "README: Update download stats"
 
   ..  note::
 
-    To learn more about `pypi-stats`, see `How to get PyPI download statistics <https://kirankoduru.github.io/python/pypi-stats.html>`_.
+    To learn more about `pypistats`, see https://pypi.org/project/pypistats/
 
 
 6. Tag the release
