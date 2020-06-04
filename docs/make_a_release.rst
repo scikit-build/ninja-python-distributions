@@ -111,7 +111,7 @@ Setting up environment
 
   .. code::
 
-    $ git tag --sign -m "ninja-python-distributions ${release}" ${release} origin/master
+    $ git tag --sign -m "ninja-python-distributions ${release}" ${release} master
 
   .. warning::
 
@@ -155,6 +155,11 @@ Setting up environment
       rm -rf dist/* && \
       rmvirtualenv ninja-${release}-install-test
 
+12. Publish master branch
+
+  .. code::
+
+    $ git push origin master
 
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/
 .. _virtualenv: http://virtualenv.readthedocs.io
