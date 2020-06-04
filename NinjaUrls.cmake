@@ -1,25 +1,25 @@
 
 #-----------------------------------------------------------------------------
 # Ninja sources
-set(unix_source_url       "https://github.com/kitware/ninja/archive/v1.9.0.g5b44b.kitware.dyndep-1.jobserver-1.tar.gz")
-set(unix_source_sha256    "449359a402c3adccd37f6fece19ce7d7cda586e837fdf50eb7d53597b7f1ce90")
+set(unix_source_url       "https://github.com/kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.tar.gz")
+set(unix_source_sha256    "d00033813993116a4e14f835df813daee9916b107333d88dbb798a22f8671b1f")
 
-set(windows_source_url    "https://github.com/kitware/ninja/archive/v1.9.0.g5b44b.kitware.dyndep-1.jobserver-1.zip")
-set(windows_source_sha256 "ff573af7342780afea85ffab9563cc68988c58d7b72f1b2b72754fcc7e771bbf")
+set(windows_source_url    "https://github.com/kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.zip")
+set(windows_source_sha256 "8399607087a165436e6bb35beed7c235180ba4a9af608f8c19bc5812ced06a81")
 
 #-----------------------------------------------------------------------------
 # Ninja binaries
 set(linux32_binary_url    "NA")  # Linux 32-bit binaries not available
 set(linux32_binary_sha256 "NA")
 
-set(linux64_binary_url    "https://github.com/Kitware/ninja/releases/download/v1.9.0.g5b44b.kitware.dyndep-1.jobserver-1/ninja-1.9.0.g5b44b.kitware.dyndep-1.jobserver-1_x86_64-linux-gnu.tar.gz")
-set(linux64_binary_sha256 "f7e5e4f45b99d85465017caa5e289d8bc7636ee43b9863139e8fd5eb7d9079ee")
+set(linux64_binary_url    "https://github.com/Kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1_x86_64-linux-gnu.tar.gz")
+set(linux64_binary_sha256 "5bb10ae9df47489b0e77732ed9fd95acccdd211d01fb6b26130fd408515b8995")
 
-set(macosx_binary_url    "https://github.com/Kitware/ninja/releases/download/v1.9.0.g5b44b.kitware.dyndep-1.jobserver-1/ninja-1.9.0.g5b44b.kitware.dyndep-1.jobserver-1_x86_64-apple-darwin.tar.gz")
-set(macosx_binary_sha256 "b757ce95aa9b9682dec76b18c26ec64536ba38ac107780080636014524f32e37")
+set(macosx_binary_url    "https://github.com/Kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1_x86_64-apple-darwin.tar.gz")
+set(macosx_binary_sha256 "4acd065772228a5dd4cf85428b304cc157f07c333e4ea9931978eaef59f5e313")
 
 set(win32_binary_url    "NA")  # Windows 32-bit binaries not available
 set(win32_binary_sha256 "NA")
 
-set(win64_binary_url    "https://github.com/Kitware/ninja/releases/download/v1.9.0.g5b44b.kitware.dyndep-1.jobserver-1/ninja-1.9.0.g5b44b.kitware.dyndep-1.jobserver-1_i686-pc-windows-msvc.zip")
-set(win64_binary_sha256 "4cde85857e18c4a0e3b0a67718a88a1206cfc8323fcd850364c29ea1949959c1")
+set(win64_binary_url    "https://github.com/Kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1_i686-pc-windows-msvc.zip")
+set(win64_binary_sha256 "47dc97d6f281108927e2dbeaeb3f61b804a8ed5a7543e7ca9499f807768cf00f")
