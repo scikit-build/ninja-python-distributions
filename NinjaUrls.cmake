@@ -22,4 +22,4 @@ set(win32_binary_url    "NA")  # Windows 32-bit binaries not available
 set(win32_binary_sha256 "NA")
 
 set(win64_binary_url    "https://github.com/Kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1_i686-pc-windows-msvc.zip")
-set(win64_binary_sha256 "47dc97d6f281108927e2dbeaeb3f61b804a8ed5a7543e7ca9499f807768cf00f")
+set(win64_binary_sha256 "7f54cd8d72306b14bcb3518e21bc0c5f9d8ec31dea7ccd340cbfade070e30019")
