@@ -1,5 +1,6 @@
 
 import pytest
+import subprocess
 
 import ninja
 
@@ -16,3 +17,7 @@ def _run(program, args):
 
 def test_ninja_module():
     _run("ninja", ["--version"])
+
+
+def test_ninja_package():
+    subprocess.run(["python", "-m", "ninja", "--version"])
