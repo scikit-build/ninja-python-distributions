@@ -20,4 +20,4 @@ def test_ninja_module():
 
 
 def test_ninja_package():
-    subprocess.run(["python", "-m", "ninja", "--version"])
+    subprocess.check_call(["python", "-m", "ninja", "--version"])
