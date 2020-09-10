@@ -1,6 +1,7 @@
 
 import pytest
 import subprocess
+import sys
 
 import ninja
 
@@ -20,4 +21,4 @@ def test_ninja_module():
 
 
 def test_ninja_package():
-    subprocess.check_call(["python", "-m", "ninja", "--version"])
+    subprocess.check_call([sys.executable, "-m", "ninja", "--version"])
