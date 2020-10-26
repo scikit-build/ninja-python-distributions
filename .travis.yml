@@ -18,6 +18,15 @@ matrix:
       env:
         - PYTHON_VERSION=2.7.15
 
+    - os: linux
+      arch: arm64-graviton2
+      virt: vm
+      group: edge
+      dist: focal
+      language: generic
+      env:
+        - PYTHON_VERSION=3.8.5
+
 before_cache:
   # Cleanup to avoid the cache to grow indefinitely as new package versions are released
   # see https://stackoverflow.com/questions/39930171/cache-brew-builds-with-travis-ci
@@ -43,19 +52,47 @@ before_install:
     if [[ "$TRAVIS_OS_NAME" == "osx" && "${PYTHON_VERSION}" == "3.7.8" ]]; then
       brew install gettext
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir $HOME/bin; ln -s $(which pip2) $HOME/bin/pip; ln -s $(which python2) $HOME/bin/python; fi
-  - python -m pip install --disable-pip-version-check --upgrade pip
-  - pip install -U scikit-ci scikit-ci-addons
-  - ci_addons --install ../addons
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        mkdir $HOME/bin; ln -s $(which pip2) $HOME/bin/pip; ln -s $(which python2) $HOME/bin/python;
+        python -m pip install --disable-pip-version-check --upgrade pip
+        pip install -U scikit-ci scikit-ci-addons
+        ci_addons --install ../addons
+    fi
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        docker run --name python-ninja --rm -itd \
+            -v $(pwd):/io \
+            --env TRAVIS=True \
+            --env TRAVIS_OS_NAME="${TRAVIS_OS_NAME}" \
+            quay.io/pypa/manylinux2014_$(arch) bash
+        docker exec -it python-ninja /io/scripts/docker-build.sh ci_before_install
+    fi
 
 install:
-  - ci install
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        ci install
+    elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        docker exec -it python-ninja /io/scripts/docker-build.sh ci_install
+    fi
 
 script:
-  - ci test
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        ci test
+    elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        docker exec -it python-ninja /io/scripts/docker-build.sh ci_script
+    fi
 
 after_success:
-  - ci after_test
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        ci after_test
+    elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        docker exec -it python-ninja /io/scripts/docker-build.sh ci_after_success
+        docker stop python-ninja
+    fi
 
 deploy:
   # deploy-release
