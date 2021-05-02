@@ -19,8 +19,6 @@ before_install:
       environment:
         PATH: $<HOME>/.pyenv/versions/$<PYTHON_VERSION>/bin:$<PATH>
         SETUP_BDIST_WHEEL_ARGS: --plat-name macosx-10.6-x86_64
-      commands:
-        - python ../addons/travis/install_pyenv.py
 
 install:
   commands:
