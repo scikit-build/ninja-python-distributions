@@ -65,7 +65,7 @@ before_install:
             --env TRAVIS=True \
             --env TRAVIS_OS_NAME="${TRAVIS_OS_NAME}" \
             quay.io/pypa/manylinux2014_$(arch) bash
-        docker exec -it python-ninja /io/scripts/docker-build.sh ci_before_install
+        docker exec -it python-ninja /io/scripts/manylinux2014-aarch64-build-and-test-wheel.sh ci_before_install
     fi
 
 install:
@@ -73,7 +73,7 @@ install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         ci install
     elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        docker exec -it python-ninja /io/scripts/docker-build.sh ci_install
+        docker exec -it python-ninja /io/scripts/manylinux2014-aarch64-build-and-test-wheel.sh ci_install
     fi
 
 script:
@@ -81,7 +81,7 @@ script:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         ci test
     elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        docker exec -it python-ninja /io/scripts/docker-build.sh ci_script
+        docker exec -it python-ninja /io/scripts/manylinux2014-aarch64-build-and-test-wheel.sh ci_script
     fi
 
 after_success:
@@ -89,7 +89,7 @@ after_success:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         ci after_test
     elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        docker exec -it python-ninja /io/scripts/docker-build.sh ci_after_success
+        docker exec -it python-ninja /io/scripts/manylinux2014-aarch64-build-and-test-wheel.sh ci_after_success
         docker stop python-ninja
     fi
 
