@@ -58,6 +58,7 @@ setup(
     description=r'Ninja is a small build system with a focus on speed',
 
     long_description=readme + '\n\n' + history,
+    long_description_content_type='text/x-rst',
 
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
