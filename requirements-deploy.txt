@@ -1,8 +1,0 @@
-twine
-
-# need to pin cryptography for manylinux1 builds & s390x/ppc64le builds
-# cryptography only provides manylinux2010 wheels since 3.4.0
-# because of the lack of a decent rust compiler on manylinux1
-# For s390x/ppc64le builds, cryptography never provided wheels, the requirements to
-# build from source are a relaxed when building the 3.3 series
-cryptography~=3.3.2 ; sys_platform=="linux" and platform_machine in "i386, i486, i586, i686, x86_64, s390x, ppc64le"
