@@ -1,1 +1,1 @@
-ninja/_version.py export-subst
+src/ninja/_version.py export-subst

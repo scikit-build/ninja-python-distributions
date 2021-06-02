@@ -44,6 +44,7 @@ setup(
     author='Jean-Christophe Fillion-Robin',
     author_email='scikit-build@googlegroups.com',
 
+    package_dir={'': 'src'},
     packages=['ninja'],
 
     entry_points={
@@ -80,4 +81,4 @@ setup(
     install_requires=requirements,
     tests_require=dev_requirements,
     setup_requires=setup_requires
-    )
+)
