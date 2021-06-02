@@ -85,7 +85,7 @@ endif()
 # Download source
 #-----------------------------------------------------------------------------
 if(NOT DEFINED Ninja_SOURCE_DIR)
-  set(Ninja_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
+  set(Ninja_SOURCE_DIR "${CMAKE_SOURCE_DIR}/Ninja-src")
 
   # Download selected source archive
   ExternalProject_add(download_ninja_source
@@ -162,5 +162,5 @@ else()
 
 endif()
 
-install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION ninja)
-install(PROGRAMS ${ninja_executable} DESTINATION ninja/data/bin)
+install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION src/ninja)
+install(PROGRAMS ${ninja_executable} DESTINATION src/ninja/data/bin)
