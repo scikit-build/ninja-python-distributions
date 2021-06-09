@@ -1,5 +1,10 @@
 codecov>=2.0.5
 coverage>=4.2
+
+# need to pin cryptography for manylinux1 builds
+# cryptography only provides manylinux2010 wheels since 3.4.0
+# because of the lack of a decent rust compiler on manylinux1
+cryptography~=3.3.2 ; sys_platform=="linux" and platform_machine in "i386, i486, i586, i686, x86_64"
 flake8>=3.0.4
 pytest>=4.5.0
 pytest-cov>=2.7.1
@@ -11,8 +16,3 @@ twine
 virtualenv>=15.0.3
 wheel>=0.34
 wheeltools
-
-# need to pin cryptography for manylinux1 builds
-# cryptography only provides manylinux2010 wheels since 3.4.0
-# because of the lack of a decent rust compiler on manylinux1
-cryptography~=3.3.2 ; sys_platform=="linux" and platform_machine in "i386, i486, i586, i686, x86_64"
