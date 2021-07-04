@@ -13,7 +13,7 @@ This is usually done after :ref:`updating_ninja_version`.
 Prerequisites
 -------------
 
-* All CI tests are passing on `AppVeyor`_, `CircleCI`_ and `Travis CI`_.
+* All CI tests are passing on `GitHub Actions`_.
 
 * You have a `GPG signing key <https://help.github.com/articles/generating-a-new-gpg-key/>`_.
 
@@ -63,7 +63,7 @@ Setting up environment
 `PyPI`_: Step-by-step
 ---------------------
 
-1. Make sure that all CI tests are passing on `AppVeyor`_, `CircleCI`_ and `Travis CI`_.
+1. Make sure that all CI tests are passing on `GitHub Actions`_.
 
 
 2. Download the latest sources
@@ -128,7 +128,7 @@ Setting up environment
   .. note:: This will trigger builds on each CI services and automatically upload the wheels \
             and source distribution on `PyPI`_.
 
-8. Check the status of the builds on `AppVeyor`_, `CircleCI`_ and `Travis CI`_.
+8. Check the status of the builds on `GitHub Actions`_.
 
 9. Once the builds are completed, check that the distributions are available on `PyPI`_.
 
@@ -166,8 +166,6 @@ Setting up environment
 .. _venv: https://docs.python.org/3/library/venv.html
 
 
-.. _AppVeyor: https://ci.appveyor.com/project/scikit-build/ninja-python-distributions-f3rbb/history
-.. _CircleCI: https://circleci.com/gh/scikit-build/ninja-python-distributions
-.. _Travis CI: https://travis-ci.org/scikit-build/ninja-python-distributions/pull_requests
+.. _GitHub Actions: https://github.com/scikit-build/ninja-python-distributions/actions/workflows/build.yml
 
 .. _PyPI: https://pypi.org/project/ninja
