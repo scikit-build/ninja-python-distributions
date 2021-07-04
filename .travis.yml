@@ -55,7 +55,7 @@ before_install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         python -m pip install --disable-pip-version-check --upgrade pip
-        pip install -U scikit-ci scikit-ci-addons
+        pip install -U scikit-ci scikit-ci-addons -c constraints.txt
         ci_addons --install ../addons
     fi
   - |

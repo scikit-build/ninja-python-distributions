@@ -9,7 +9,7 @@ export PATH="/opt/python/${MANYLINUX_PYTHON}/bin:$PATH"
 cd /io
 
 ci_before_install() {
-    /opt/python/${MANYLINUX_PYTHON}/bin/pip install scikit-ci scikit-ci-addons scikit-build
+    /opt/python/${MANYLINUX_PYTHON}/bin/pip install scikit-ci scikit-ci-addons scikit-build -c constraints.txt
 }
 
 ci_install() {

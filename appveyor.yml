@@ -41,7 +41,7 @@ cache:
   - C:\\cmake-3.6.2
 
 init:
-  - "%PYTHON_DIR%\\python.exe -m pip install -U scikit-ci scikit-ci-addons"
+  - "%PYTHON_DIR%\\python.exe -m pip install -U scikit-ci scikit-ci-addons -c constraints.txt"
   - "%PYTHON_DIR%\\python.exe -m ci_addons --install ../addons"
 
   - ps: ../addons/appveyor/rolling-build.ps1
