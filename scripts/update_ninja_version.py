@@ -22,7 +22,6 @@ except ImportError:
 
 from requests import request
 
-
 ROOT_DIR = os.path.join(os.path.dirname(__file__), "..")
 
 REQ_BUFFER_SIZE = 65536  # Chunk size when iterating a download body
