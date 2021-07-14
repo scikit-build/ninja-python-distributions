@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Command line executable allowing to update NinjaUrls.cmake, documentation
 and tests given a Ninja version.
 """
