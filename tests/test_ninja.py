@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import pytest
 import subprocess
 import sys
+
+import pytest
 
 import ninja
 

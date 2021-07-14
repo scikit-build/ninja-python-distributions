@@ -27,3 +27,7 @@ before-all = [
     "pipx install ninja==1.10.0.post2",
     "ninja --version",
 ]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
