@@ -60,17 +60,16 @@ Get Started
 Ready to contribute? Here's how to set up `ninja-python-distributions` for local development.
 
 1. Fork the `ninja-python-distributions` repo on GitHub.
+
 2. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/ninja-python-distributions.git
 
-3. Install your local copy into a virtualenv. Assuming you have
-   virtualenvwrapper installed (`pip install virtualenvwrapper`), this is how
-   you set up your cloned fork for local development::
+3. Make sure you have ``nox`` installed (preferably use ``pipx`` or ``brew``
+   (macOS) if you have those)::
 
-    $ mkvirtualenv ninja-python-distributions
+    $ pip install nox
     $ cd ninja-python-distributions/
-    $ pip install -r requirements-dev.txt
 
 4. Create a branch for local development::
 
@@ -78,12 +77,10 @@ Ready to contribute? Here's how to set up `ninja-python-distributions` for local
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and
+5. When you're done making changes, check that your changes pass linters and
    the tests::
 
-    $ flake8
-    $ python setup.py bdist_wheel
-    $ python setup.py test
+    $ nox
 
 6. Commit your changes and push your branch to GitHub::
 
@@ -115,6 +112,8 @@ Tips
 
 To run a subset of tests::
 
-	$ pytest tests/test_ninja.py
+    $ pytest tests/test_ninja.py
+    # OR
+    $ nox -s tests -- tests/test_ninja.py
 
 .. _GitHub Actions: https://github.com/scikit-build/ninja-python-distributions/actions/workflows/build.yml
