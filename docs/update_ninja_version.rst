@@ -9,6 +9,19 @@ of Ninja associated with the current Ninja python distributions.
 
 Available Ninja archives can be found `here <https://github.com/kitware/ninja/releases>`_.
 
+Nox prodedure
+-------------
+
+If using nox, run::
+
+    nox -s bump -- <version>
+
+
+And follow the instructions it gives you. Leave off the version to bump to the latest version. Add `--commit` to run the commit procedure.
+
+Classic procedure:
+------------------
+
 1. Install `requests` and `githubrelease`::
 
     $ pip install requests githubrelease
