@@ -35,7 +35,7 @@ NINJA_SRC_ARCHIVE_URL_TEMPLATE = \
 class NinjaReleaseNotFound(Exception):
     def __init__(self, release_name):
         super(NinjaReleaseNotFound, self).__init__(
-            "GitHub repository '%s': Couldn't find release '%s'" % (
+            "GitHub repository '{}': Couldn't find release '{}'".format(
                 NINJA_RELEASES_GITHUB_REPO, release_name))
 
 
@@ -182,7 +182,7 @@ def update_cmake_urls_script(version):
     cmake_urls_filename = "NinjaUrls.cmake"
     cmake_urls_filepath = os.path.join(ROOT_DIR, cmake_urls_filename)
 
-    msg = "Updating '%s' with CMake version %s" % (cmake_urls_filename, version)
+    msg = "Updating '{}' with CMake version {}".format(cmake_urls_filename, version)
     with _log(msg), open(cmake_urls_filepath, "w") as cmake_file:
         cmake_file.write(content)
 
