@@ -55,7 +55,7 @@ jobs:
         if: runner.os == 'Linux'
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.0.0a4
+        uses: pypa/cibuildwheel@v2.0.0
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
 
@@ -139,4 +139,3 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_RELEASE_PASSWORD }}
-          skip_existing: true

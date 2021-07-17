@@ -14,11 +14,8 @@ test-extras = "test"
 test-command = "pytest {project}/tests"
 
 [tool.cibuildwheel.linux]
-manylinux-x86_64-image = "quay.io/pypa/manylinux1_x86_64:2021-07-04-13bcf48"
-manylinux-i686-image = "quay.io/pypa/manylinux1_i686:2021-07-04-13bcf48"
-manylinux-aarch64-image = "quay.io/pypa/manylinux2014_aarch64:2021-07-04-1e3ce39"
-manylinux-ppc64le-image = "quay.io/pypa/manylinux2014_ppc64le:2021-07-04-1e3ce39"
-manylinux-s390x-image = "quay.io/pypa/manylinux2014_s390x:2021-07-04-1e3ce39"
+manylinux-x86_64-image = "manylinux1"
+manylinux-i686-image = "manylinux1"
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.9"
