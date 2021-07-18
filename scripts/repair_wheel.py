@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import argparse
+import re
 import shutil
 import subprocess
 import sys
@@ -43,7 +44,7 @@ def main():
             subprocess.run(["auditwheel", "repair", "-w", str(tmpdir), str(file)], check=True, stdout=subprocess.PIPE)
         elif os_ == "macos":
             subprocess.run(
-                ["delocate-wheel", "--require-archs", "x86_64", "-w", str(tmpdir), str(file)],
+                ["delocate-wheel", "--require-archs", "x86_64,arm64", "-w", str(tmpdir), str(file)],
                 check=True,
                 stdout=subprocess.PIPE,
             )
@@ -54,11 +55,34 @@ def main():
         assert len(files) == 1, files
         file = files[0]
 
+        # we need to handle macOS universal2 & arm64 here for now, let's use additional_platforms for this.
+        additional_platforms = []
+        if os_ == "macos":
+            # first, get the target macOS deployment target from the wheel
+            match = re.match(r"^.*-macosx_(\d+)_(\d+)_x86_64\.whl$", file.name)
+            assert match is not None
+            target = tuple(map(int, match.groups()))
+
+            # let's add universal2 platform for this wheel.
+            additional_platforms = ["macosx_{}_{}_universal2".format(*target)]
+
+            # given pip support for universal2 was added after arm64 introduction
+            # let's also add arm64 platform.
+            arm64_target = target
+            if arm64_target < (11, 0):
+                arm64_target = (11, 0)
+            additional_platforms.append("macosx_{}_{}_arm64".format(*arm64_target))
+
+            if target < (11, 0):
+                # They're were also issues with pip not picking up some universal2 wheels, tag twice
+                additional_platforms.append("macosx_11_0_universal2")
+
         # make this a py2.py3 wheel
         convert_to_generic_platform_wheel(
             str(file),
             out_dir=str(wheelhouse),
             py2_py3=True,
+            additional_platforms=additional_platforms,
         )
 
 
