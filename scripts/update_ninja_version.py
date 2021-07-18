@@ -140,19 +140,19 @@ def _update_file(filepath, regex, replacement, verbose=True):
 
 
 def update_docs(upstream_repository, version):
-    pattern = re.compile(r"ninja \d.\d.\d(\.[\w\-]+)*")
+    pattern = re.compile(r"ninja \d+.\d+.\d+(\.[\w\-]+)*")
     replacement = "ninja %s" % version
     _update_file(
         os.path.join(ROOT_DIR, "README.rst"),
         pattern, replacement)
 
-    pattern = re.compile(r"(?<=v)\d.\d.\d(?:\.[\w\-]+)*(?=(?:\.zip|\.tar\.gz|\/))")
+    pattern = re.compile(r"(?<=v)\d+.\d+.\d+(?:\.[\w\-]+)*(?=(?:\.zip|\.tar\.gz|\/))")
     replacement = version
     _update_file(
         os.path.join(ROOT_DIR, "docs/update_ninja_version.rst"),
         pattern, replacement)
 
-    pattern = re.compile(r"(?<!v)\d.\d.\d(?:\.[\w\-]+)*")
+    pattern = re.compile(r"(?<!v)\d+.\d+.\d+(?:\.[\w\-]+)*")
     replacement = version
     _update_file(
         os.path.join(ROOT_DIR, "docs/update_ninja_version.rst"),
@@ -173,7 +173,7 @@ def update_tests(version):
         parts[3] = "git"
         version = ".".join(parts)
 
-    pattern = re.compile(r'expected_version = "\d.\d.\d(\.[\w\-]+)*"')
+    pattern = re.compile(r'expected_version = "\d+.\d+.\d+(\.[\w\-]+)*"')
     replacement = 'expected_version = "%s"' % version
     _update_file(os.path.join(
         ROOT_DIR, "tests/test_distribution.py"), pattern, replacement)
