@@ -98,12 +98,12 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: artifact
-          path: dist
+          path: sdist
 
       - name: Install SDist
         env:
           SKBUILD_CONFIGURE_OPTIONS: "-DBUILD_CMAKE_FROM_SOURCE:BOOL=OFF"
-        run: pip install dist/*.tar.gz
+        run: pip install sdist/*.tar.gz
 
       - name: Install test dependencies
         run: pip install -r requirements-test.txt
