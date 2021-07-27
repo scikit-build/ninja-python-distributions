@@ -5,16 +5,8 @@ project(NinjaPythonDistributions)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
 # Options
-set(_build_from_source_default ON)
-if((WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8) OR APPLE)
-  set(_build_from_source_default OFF)
-endif()
-option(BUILD_FROM_SOURCE "Build Ninja from source" ${_build_from_source_default})
 option(BUILD_VERBOSE "Display additional information while building (e.g download progress, ...)" OFF)
 set(ARCHIVE_DOWNLOAD_DIR "${CMAKE_BINARY_DIR}" CACHE PATH "Directory where to download archives")
-
-# Dependencies
-find_package(PythonInterp REQUIRED)
 
 include(NinjaUrls)
 
@@ -36,28 +28,12 @@ if(WIN32)
 endif()
 check_archive_var("${src_archive}")
 
-set(binary_archive "linux32_binary")
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(binary_archive "linux64_binary")
-endif()
-if(APPLE)
-  set(binary_archive "macosx_binary")
-endif()
-if(WIN32)
-  set(binary_archive "win32_binary")
-  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(binary_archive "win64_binary")
-  endif()
-endif()
-check_archive_var("${binary_archive}")
-
 #-----------------------------------------------------------------------------
 # Summary
 #-----------------------------------------------------------------------------
 message(STATUS "*********************************************")
 message(STATUS "Ninja Python Distribution")
 message(STATUS "")
-message(STATUS "  BUILD_FROM_SOURCE         : ${BUILD_FROM_SOURCE}")
 message(STATUS "  BUILD_VERBOSE             : ${BUILD_VERBOSE}")
 message(STATUS "")
 message(STATUS "  ARCHIVE_DOWNLOAD_DIR      : ${ARCHIVE_DOWNLOAD_DIR}")
@@ -65,10 +41,6 @@ message(STATUS "")
 message(STATUS "    src_archive             : ${src_archive}")
 message(STATUS "    <src_archive>_url       : ${${src_archive}_url}")
 message(STATUS "    <src_archive>_sha256    : ${${src_archive}_sha256}")
-message(STATUS "")
-message(STATUS "    binary_archive          : ${binary_archive}")
-message(STATUS "    <binary_archive>_url    : ${${binary_archive}_url}")
-message(STATUS "    <binary_archive>_sha256 : ${${binary_archive}_sha256}")
 message(STATUS "*********************************************")
 
 #-----------------------------------------------------------------------------
@@ -105,18 +77,21 @@ elseif(NOT EXISTS ${Ninja_SOURCE_DIR})
   message(FATAL_ERROR "Ninja_SOURCE_DIR is set to a nonexistent directory")
 endif()
 
-if(BUILD_FROM_SOURCE)
+#-----------------------------------------------------------------------------
+# Build from source
+#-----------------------------------------------------------------------------
+if(UNIX AND NOT APPLE)
+  # We're more likely to build from sources from PyPI on UNIX
+  # In order to relax the constraint on CMake version,
+  # use the python bootstrap script rather than the CMake build (requires 3.15+)
 
-  #-----------------------------------------------------------------------------
-  # Build from source
-  #-----------------------------------------------------------------------------
+  # Dependencies
+  find_package(PythonInterp REQUIRED)
+
   set(ninja_executable ${Ninja_SOURCE_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX})
-
   set(bootstrap_command ${PYTHON_EXECUTABLE} configure.py --bootstrap)
   # Explicitly defining _BSD_SOURCE is required to support building the wheel on Alpine. See issue  #22
-  if(UNIX AND NOT APPLE)
-    set(bootstrap_command ${CMAKE_COMMAND} -E env CXXFLAGS=-D_BSD_SOURCE ${bootstrap_command})
-  endif()
+  set(bootstrap_command ${CMAKE_COMMAND} -E env CXXFLAGS=-D_BSD_SOURCE ${bootstrap_command})
   add_custom_command(
     COMMAND ${bootstrap_command}
     OUTPUT ${ninja_executable}
@@ -125,41 +100,31 @@ if(BUILD_FROM_SOURCE)
   add_custom_target(build_ninja ALL
     DEPENDS download_ninja_source ${ninja_executable}
     )
-
-  find_program(STRIP_EXECUTABLE strip)
-  if(STRIP_EXECUTABLE)
-    add_custom_target(strip_ninja_executable ALL
-      COMMAND ${STRIP_EXECUTABLE} ${ninja_executable}
-      WORKING_DIRECTORY ${Ninja_SOURCE_DIR}
-      COMMENT "Stripping ninja executable"
-      )
-    add_dependencies(strip_ninja_executable build_ninja)
-  endif()
-
 else()
-
-  #-----------------------------------------------------------------------------
-  # Download pre-built archive
-  #-----------------------------------------------------------------------------
-  if(${binary_archive}_sha256 STREQUAL "NA")
-    message(FATAL_ERROR "Pre-built archives not available for '${binary_archive}'. Consider setting BUILD_FROM_SOURCE to ON.")
-  endif()
-  # Download selected binary archive
-  ExternalProject_add(download_ninja_binary
-    SOURCE_DIR ${CMAKE_BINARY_DIR}/bin
-    URL ${${binary_archive}_url}
-    URL_HASH SHA256=${${binary_archive}_sha256}
-    DOWNLOAD_DIR ${ARCHIVE_DOWNLOAD_DIR}
-    USES_TERMINAL_DOWNLOAD 1
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    BUILD_IN_SOURCE 1
+  set(Ninja_BINARY_DIR ${CMAKE_BINARY_DIR}/Ninja-build)
+  ExternalProject_add(build_ninja
+    SOURCE_DIR ${Ninja_SOURCE_DIR}
+    BINARY_DIR ${Ninja_BINARY_DIR}
+    DOWNLOAD_COMMAND ""
+    UPDATE_COMMAND ""
+    BUILD_ALWAYS 1
+    USES_TERMINAL_CONFIGURE 1
+    USES_TERMINAL_BUILD 1
     INSTALL_COMMAND ""
-    ${ep_download_no_progress_args}
+    DEPENDS
+      download_ninja_source
     )
-  message(STATUS "download_ninja_binary - URL: ${${binary_archive}_url}")
-  set(ninja_executable ${CMAKE_BINARY_DIR}/bin/ninja${CMAKE_EXECUTABLE_SUFFIX})
+  set(ninja_executable ${Ninja_BINARY_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX})
+endif()
 
+find_program(STRIP_EXECUTABLE strip)
+if(STRIP_EXECUTABLE)
+  add_custom_target(strip_ninja_executable ALL
+    COMMAND ${STRIP_EXECUTABLE} ${ninja_executable}
+    WORKING_DIRECTORY ${Ninja_SOURCE_DIR}
+    COMMENT "Stripping ninja executable"
+    )
+  add_dependencies(strip_ninja_executable build_ninja)
 endif()
 
 install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION src/ninja)
