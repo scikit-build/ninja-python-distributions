@@ -62,6 +62,13 @@ def bump(session: nox.Session) -> None:
     """
     parser = argparse.ArgumentParser(description="Process some integers.")
     parser.add_argument(
+        "--upstream-repository",
+        metavar="UPSTREAM_REPOSITORY",
+        choices=["Kitware/ninja", "ninja-build/ninja"],
+        default="Kitware/ninja",
+        help="Ninja upstream repository",
+    )
+    parser.add_argument(
         "--commit", action="store_true", help="Make a branch and commit."
     )
     parser.add_argument(
@@ -72,17 +79,17 @@ def bump(session: nox.Session) -> None:
     if args.version is None:
         session.install("lastversion")
         version = session.run(
-            "lastversion", "--format", "tag", "kitware/ninja", log=False, silent=True
+            "lastversion", "--format", "tag", args.upstream_repository, log=False, silent=True
         ).strip()
         if version.startswith("v"):
             version = version[1:]
     else:
         version = args.version
 
-    session.install("githubrelease")
+    session.install("requests")
 
     extra = ["--quiet"] if args.commit else []
-    session.run("python", "scripts/update_ninja_version.py", version, *extra)
+    session.run("python", "scripts/update_ninja_version.py", "--upstream-repository", args.upstream_repository, version, *extra)
 
     if args.commit:
         session.run("git", "switch", "-c", f"update-to-ninja-{version}", external=True)

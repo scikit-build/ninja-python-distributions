@@ -7,7 +7,7 @@ Updating the Ninja version
 A developer should use the following steps to update the version ``X.Y.Z``
 of Ninja associated with the current Ninja python distributions.
 
-Available Ninja archives can be found `here <https://github.com/kitware/ninja/releases>`_.
+Available Ninja archives can be found `here <https://github.com/Kitware/ninja/releases>`_.
 
 Nox prodedure
 -------------
@@ -32,18 +32,12 @@ Classic procedure:
     $ release=1.10.0.gfb670.kitware.jobserver-1
     $ python scripts/update_ninja_version.py ${release}
 
-    Collecting URLs and SHA256s from 'https://github.com/kitware/ninja/releases'
-    Downloading https://github.com/kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.tar.gz
-    Downloading https://github.com/kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.tar.gz - done
-    Downloading https://github.com/kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.zip
-    Downloading https://github.com/kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.zip - done
-    Downloading https://github.com/kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1
-    Downloading https://github.com/kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1 - done
-    Downloading https://github.com/kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1
-    Downloading https://github.com/kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1 - done
-    Downloading https://github.com/kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1
-    Downloading https://github.com/kitware/ninja/releases/download/v1.10.0.gfb670.kitware.jobserver-1/ninja-1.10.0.gfb670.kitware.jobserver-1 - done
-    Collecting URLs and SHA256s from 'https://github.com/kitware/ninja/releases' - done
+    Collecting URLs and SHA256s from 'https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1'
+    Downloading https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.tar.gz
+    Downloading https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.tar.gz - done
+    Downloading https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.zip
+    Downloading https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1.zip - done
+    Collecting URLs and SHA256s from 'https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1' - done
     Updating 'NinjaUrls.cmake' with CMake version 1.10.0.gfb670.kitware.jobserver-1
     Updating 'NinjaUrls.cmake' with CMake version 1.10.0.gfb670.kitware.jobserver-1 - done
     Updating README.rst
