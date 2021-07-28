@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 import argparse
+import sys
 from pathlib import Path
 
 import nox
 
 nox.options.sessions = ["lint", "build", "tests"]
 
-BUILD_ENV = {
-    "MACOSX_DEPLOYMENT_TARGET": "10.9",
-}
-
+if sys.platform.startswith("darwin"):
+    BUILD_ENV = {
+        "MACOSX_DEPLOYMENT_TARGET": "10.9",
+        "CMAKE_OSX_ARCHITECTURES": "arm64;x86_64",
+        "CFLAGS": "-save-temps",
+        "CXXFLAGS": "-save-temps",
+    }
+else:
+    BUILD_ENV = {}
 
 built = ""
 
