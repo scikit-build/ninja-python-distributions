@@ -23,7 +23,6 @@ manylinux-i686-image = "manylinux1"
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.9"
-CMAKE_OSX_ARCHITECTURES = "arm64;x86_64"
 
 [tool.cibuildwheel.windows]
 before-all = [
