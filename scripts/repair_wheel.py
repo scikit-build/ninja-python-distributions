@@ -59,8 +59,8 @@ def main():
         additional_platforms = []
         if os_ == "macos":
             # first, get the target macOS deployment target from the wheel
-            match = re.match(r"^.*-macosx_(\d+)_(\d+)_x86_64\.whl$", file.name)
-            assert match is not None
+            match = re.match(r"^.*-macosx_(\d+)_(\d+)_.*\.whl$", file.name)
+            assert match is not None, f"Couldn't match on {file.name}"
             target = tuple(map(int, match.groups()))
 
             # let's add universal2 platform for this wheel.

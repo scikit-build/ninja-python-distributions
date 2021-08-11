@@ -1,5 +1,9 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "scikit-build"]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "scikit-build>=0.12",
+]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
@@ -19,7 +23,6 @@ manylinux-i686-image = "manylinux1"
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.9"
-CMAKE_OSX_ARCHITECTURES = "arm64;x86_64"
 
 [tool.cibuildwheel.windows]
 before-all = [
