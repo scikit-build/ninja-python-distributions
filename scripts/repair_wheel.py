@@ -55,7 +55,7 @@ def main():
         assert len(files) == 1, files
         file = files[0]
 
-        # we need to handle macOS universal2 & arm64 here for now, let's use additional_platforms for this.
+        # we need to handle macOS x86_64 & arm64 here for now, let's use additional_platforms for this.
         additional_platforms = []
         if os_ == "macos":
             # first, get the target macOS deployment target from the wheel
@@ -63,8 +63,9 @@ def main():
             assert match is not None, f"Couldn't match on {file.name}"
             target = tuple(map(int, match.groups()))
 
-            # let's add universal2 platform for this wheel.
-            additional_platforms = ["macosx_{}_{}_universal2".format(*target)]
+            # given pip support for universal2 was added after x86_64 introduction
+            # let's also add x86_64 platform.
+            additional_platforms.append("macosx_{}_{}_x86_64".format(*target))
 
             # given pip support for universal2 was added after arm64 introduction
             # let's also add arm64 platform.
