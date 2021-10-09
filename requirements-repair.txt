@@ -1,2 +1,1 @@
-git+https://github.com/jcfr/wheeltools.git@wheeltools-2018-10-28-a2f174d0e
-wheel<0.38
+git+https://github.com/henryiii/wheel.git@deb2a78012b41bb3a9ebdef9e139261d62ce6be5
