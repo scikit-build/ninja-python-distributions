@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
 
 from convert_to_generic_platform_wheel import convert_to_generic_platform_wheel
@@ -58,6 +59,15 @@ def main():
         # we need to handle macOS x86_64 & arm64 here for now, let's use additional_platforms for this.
         additional_platforms = []
         if os_ == "macos":
+            # delocate-wheel --require-archs does not seem to check executables...
+            with tempfile.TemporaryDirectory() as tmpdir2_:
+                tmpdir2 = Path(tmpdir2_)
+                with zipfile.ZipFile(file, 'r') as zip_ref:
+                    zip_ref.extractall(tmpdir2)
+                exe = list(tmpdir2.glob("**/bin/ninja"))
+                assert len(exe) == 1, exe
+                subprocess.run(["lipo", str(exe[0]), "-verify_arch", "x86_64", "arm64"], check=True, stdout=subprocess.PIPE)
+
             # first, get the target macOS deployment target from the wheel
             match = re.match(r"^.*-macosx_(\d+)_(\d+)_.*\.whl$", file.name)
             assert match is not None, f"Couldn't match on {file.name}"
