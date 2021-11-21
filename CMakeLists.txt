@@ -102,6 +102,30 @@ if(UNIX AND NOT APPLE)
     )
 else()
   set(Ninja_BINARY_DIR ${CMAKE_BINARY_DIR}/Ninja-build)
+  # cache arguments
+  set(_cache_args )
+  foreach(var_name IN ITEMS
+    CMAKE_BUILD_TYPE
+    CMAKE_TOOLCHAIN_FILE
+    CMAKE_BUILD_PARALLEL_LEVEL
+    CMAKE_JOB_POOLS
+    CMAKE_JOB_POOL_COMPILE
+    CMAKE_JOB_POOL_LINK
+    CMAKE_OSX_DEPLOYMENT_TARGET
+    CMAKE_OSX_ARCHITECTURES
+    CMAKE_OSX_SYSROOT
+    )
+    if(DEFINED ${var_name})
+      list(APPEND _cache_args
+        -D${var_name}:STRING=${${var_name}}
+        )
+      message(STATUS "SuperBuild - ${var_name}: ${${var_name}}")
+    endif()
+  endforeach()
+  # _cache_args should not be empty
+  list(APPEND _cache_args
+    -DNINJA_SUPERBUILD:BOOL=true
+    )
   ExternalProject_add(build_ninja
     SOURCE_DIR ${Ninja_SOURCE_DIR}
     BINARY_DIR ${Ninja_BINARY_DIR}
@@ -111,6 +135,7 @@ else()
     USES_TERMINAL_CONFIGURE 1
     USES_TERMINAL_BUILD 1
     INSTALL_COMMAND ""
+    CMAKE_CACHE_ARGS ${_cache_args}
     DEPENDS
       download_ninja_source
     )
