@@ -1,1 +1,1 @@
-git+https://github.com/henryiii/wheel.git@deb2a78012b41bb3a9ebdef9e139261d62ce6be5
+git+https://github.com/henryiii/wheel.git@de5b0e90886e9ac18e0b67a747ae764e9bb2a612
