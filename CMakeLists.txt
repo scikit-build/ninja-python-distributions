@@ -23,7 +23,7 @@ function(check_archive_var archive_var)
 endfunction()
 
 set(src_archive "unix_source")
-if(WIN32)
+if(WIN32 AND NOT (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "ARM64"))
   set(src_archive "windows_source")
 endif()
 check_archive_var("${src_archive}")
@@ -80,8 +80,8 @@ endif()
 #-----------------------------------------------------------------------------
 # Build from source
 #-----------------------------------------------------------------------------
-if(UNIX AND NOT APPLE)
-  # We're more likely to build from sources from PyPI on UNIX
+if(UNIX AND NOT APPLE OR (WIN32 AND (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "ARM64")))
+  # We're more likely to build from sources from PyPI on UNIX and win-arm64
   # In order to relax the constraint on CMake version,
   # use the python bootstrap script rather than the CMake build (requires 3.15+)
 
