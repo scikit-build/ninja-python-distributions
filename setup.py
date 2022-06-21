@@ -51,6 +51,12 @@ setup(
 
     url=r'http://ninja-build.org/',
     download_url=r'https://github.com/ninja-build/ninja/releases',
+    project_urls={
+        "Documentation": "https://github.com/scikit-build/ninja-python-distributions#readme",
+        "Source Code": "https://github.com/scikit-build/ninja-python-distributions",
+        "Mailing list": "https://groups.google.com/forum/#!forum/scikit-build",
+        "Bug Tracker": "https://github.com/scikit-build/ninja-python-distributions/issues",
+    },
 
     description=r'Ninja is a small build system with a focus on speed',
 
