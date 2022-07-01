@@ -10,3 +10,5 @@ recursive-exclude Ninja-src *
 
 include versioneer.py
 include src/ninja/_version.py
+include src/ninja/__init__.pyi
+include src/ninja/py.typed
