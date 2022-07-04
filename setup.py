@@ -68,6 +68,7 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools'
+        'Typing :: Typed',
         ],
 
     license='Apache 2.0',

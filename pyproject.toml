@@ -1,7 +1,6 @@
 [build-system]
 requires = [
     "setuptools>=42",
-    "wheel",
     "scikit-build>=0.12",
 ]
 build-backend = "setuptools.build_meta"
@@ -9,8 +8,8 @@ build-backend = "setuptools.build_meta"
 [tool.cibuildwheel]
 build = "cp39-*"
 before-all = [
-    "pipx install -f --pip-args=\"-c {project}/constraints-ci.txt\" cmake",
-    "cmake --version",
+    'pipx install -f --pip-args="-c {project}/constraints-ci.txt" cmake',
+    'cmake --version',
 ]
 before-build = "pip install -r requirements-repair.txt"
 repair-wheel-command = "python scripts/repair_wheel.py -w {dest_dir} {wheel}"
@@ -26,12 +25,11 @@ MACOSX_DEPLOYMENT_TARGET = "10.9"
 
 [tool.cibuildwheel.windows]
 before-all = [
-    "pipx install -f --pip-args=\"-c {project}/constraints-ci.txt\" cmake",
-    "cmake --version",
-    "pipx install -f --pip-args=\"-c {project}/constraints-ci.txt\" ninja",
-    "ninja --version",
+    'pipx install -f --pip-args="-c {project}/constraints-ci.txt" cmake',
+    'cmake --version',
+    'pipx install -f --pip-args="-c {project}/constraints-ci.txt" ninja',
+    'ninja --version',
 ]
 
 [tool.isort]
 profile = "black"
-multi_line_output = 3
