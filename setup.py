@@ -42,6 +42,7 @@ setup(
 
     package_dir={'': 'src'},
     packages=['ninja'],
+    package_data={"ninja": ["py.typed"]},
 
     entry_points={
         'console_scripts': [
