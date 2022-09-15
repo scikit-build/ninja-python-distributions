@@ -88,7 +88,7 @@ if(UNIX AND NOT APPLE)
   # Dependencies
   find_package(PythonInterp REQUIRED)
 
-  #configure.py is deprecated by ninja-build project. 
+  #configure.py is deprecated by ninja-build project.
   set(ninja_executable ${Ninja_SOURCE_DIR}/cmake-build/ninja${CMAKE_EXECUTABLE_SUFFIX})
   set(local_cmake_command ${CMAKE_COMMAND} -Bcmake-build -H. && ${CMAKE_COMMAND} --build cmake-build)
   add_custom_command(
