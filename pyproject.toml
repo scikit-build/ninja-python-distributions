@@ -7,6 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
 build = "cp39-*"
+build-verbosity = 1
 before-all = [
     'pipx install -f --pip-args="-c {project}/constraints-ci.txt" cmake',
     'cmake --version',
