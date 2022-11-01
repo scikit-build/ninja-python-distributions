@@ -13,7 +13,7 @@ on:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -30,25 +30,25 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: "x86_64"
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: "i686"
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: "aarch64"
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: "ppc64le"
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             arch: "s390x"
           - os: windows-2019
             arch: "AMD64"
           - os: windows-2019
             arch: "x86"
-          - os: macos-10.15
+          - os: macos-11
             arch: "universal2"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # required for versioneer to find tags
 
@@ -68,9 +68,9 @@ jobs:
   build_sdist:
     name: Build source distribution
     needs: [lint]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # required for versioneer to find tags
 
@@ -84,14 +84,15 @@ jobs:
   test_sdist:
     name: Test SDist with python ${{ matrix.python }}
     needs: [build_sdist]
+    # 22.04 doesn't have 2.7 or 3.6
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
-        python: ["2.7", "3.6", "3.10-dev"]
+        python: ["2.7", "3.6", "3.11"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         name: Install Python ${{ matrix.python }}
         with:
@@ -116,7 +117,7 @@ jobs:
   check_dist:
     name: Check dist
     needs: [build_wheels, build_sdist, test_sdist]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -127,7 +128,7 @@ jobs:
 
   upload_pypi:
     name: Upload to PyPI
-    needs: [build_wheels, build_sdist, test_sdist, check_dist]
+    needs: [check_dist]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.repository == 'scikit-build/ninja-python-distributions' && startsWith(github.ref, 'refs/tags/')
     steps:
