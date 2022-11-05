@@ -8,7 +8,7 @@ DIST_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../dist'))
 
 
 def _check_ninja_install(virtualenv):
-    expected_version = "1.10.2.git.kitware.jobserver-1"
+    expected_version = "1.11.1.git.kitware.jobserver-1"
 
     for executable_name in ["ninja"]:
         output = virtualenv.run(
