@@ -18,8 +18,8 @@ test-extras = "test"
 test-command = "pytest {project}/tests"
 
 [tool.cibuildwheel.linux]
-manylinux-x86_64-image = "manylinux1"
-manylinux-i686-image = "manylinux1"
+manylinux-x86_64-image = "manylinux2010"
+manylinux-i686-image = "manylinux2010"
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.9"
