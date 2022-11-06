@@ -65,6 +65,13 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
 
+      - name: Test wheel on host Linux
+        if: runner.os == 'Linux' && matrix.arch == 'x86_64'
+        run: |
+          pip install wheelhouse/*manylinux*x86_64*.whl
+          ninja --version
+          python -m ninja --version
+
   build_sdist:
     name: Build source distribution
     needs: [lint]
