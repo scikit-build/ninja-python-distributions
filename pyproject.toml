@@ -32,5 +32,9 @@ before-all = [
     'ninja --version',
 ]
 
+[[tool.cibuildwheel.overrides]]
+select = "*-musllinux_*"
+environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
+
 [tool.isort]
 profile = "black"
