@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Command line executable allowing to update NinjaUrls.cmake, documentation
 and tests given a Ninja version.
@@ -130,7 +129,7 @@ def _update_file(filepath, regex, replacement, verbose=True):
     msg = "Updating %s" % os.path.relpath(filepath, ROOT_DIR)
     with _log(msg, verbose=verbose):
         pattern = re.compile(regex)
-        with open(filepath, "r") as doc_file:
+        with open(filepath) as doc_file:
             lines = doc_file.readlines()
             updated_content = []
             for line in lines:
