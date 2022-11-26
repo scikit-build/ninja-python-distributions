@@ -17,9 +17,11 @@ repair-wheel-command = "python scripts/repair_wheel.py -w {dest_dir} {wheel}"
 test-extras = "test"
 test-command = "pytest {project}/tests"
 
-[tool.cibuildwheel.linux]
+[[tool.cibuildwheel.overrides]]
+select = "*-manylinux_{x86_64,i686}"
 manylinux-x86_64-image = "manylinux1"
 manylinux-i686-image = "manylinux1"
+environment = { LDFLAGS = "-static-libstdc++" }
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.9"
