@@ -16,7 +16,7 @@ before-build = "pip install -r requirements-repair.txt"
 repair-wheel-command = "python scripts/repair_wheel.py -w {dest_dir} {wheel}"
 test-extras = "test"
 test-command = "pytest {project}/tests"
-test-skip: ["*-win_arm64", "*-macosx_universal2:arm64"]
+test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
 
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux_{x86_64,i686}"
