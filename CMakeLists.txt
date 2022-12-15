@@ -120,8 +120,8 @@ ExternalProject_add(build_ninja
 set(ninja_executable ${Ninja_BINARY_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX})
 set(NINJA_BUILD_LAST_STEP "build")
 
-# This should not be stripped if cross-compiling on Windows
-if(NOT DEFINED ENV{DIST_EXTRA_CONFIG})
+# This should not be stripped or tested if cross-compiling on Windows
+if(CMAKE_CROSS_COMPILE OR NOT DEFINED ENV{DIST_EXTRA_CONFIG})
   find_program(STRIP_EXECUTABLE strip)
   if(STRIP_EXECUTABLE)
     ExternalProject_Add_Step(build_ninja strip_executables
@@ -132,17 +132,17 @@ if(NOT DEFINED ENV{DIST_EXTRA_CONFIG})
       )
     set(NINJA_BUILD_LAST_STEP "strip_executables")
   endif()
-endif()
 
-if(RUN_NINJA_TEST)
-  ExternalProject_Add_Step(build_ninja run_ninja_test_suite
-    DEPENDEES ${NINJA_BUILD_LAST_STEP}
-    COMMENT "Running Ninja test suite"
-    COMMAND ${Ninja_BINARY_DIR}/ninja_test${CMAKE_EXECUTABLE_SUFFIX}
-    WORKING_DIRECTORY ${Ninja_BINARY_DIR}
-    USES_TERMINAL 1
-    )
-  set(NINJA_BUILD_LAST_STEP "run_ninja_test_suite")
+  if(RUN_NINJA_TEST)
+    ExternalProject_Add_Step(build_ninja run_ninja_test_suite
+      DEPENDEES ${NINJA_BUILD_LAST_STEP}
+      COMMENT "Running Ninja test suite"
+      COMMAND ${Ninja_BINARY_DIR}/ninja_test${CMAKE_EXECUTABLE_SUFFIX}
+      WORKING_DIRECTORY ${Ninja_BINARY_DIR}
+      USES_TERMINAL 1
+      )
+    set(NINJA_BUILD_LAST_STEP "run_ninja_test_suite")
+  endif()
 endif()
 
 install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION src/ninja)
