@@ -120,16 +120,18 @@ ExternalProject_add(build_ninja
 set(ninja_executable ${Ninja_BINARY_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX})
 set(NINJA_BUILD_LAST_STEP "build")
 
-find_program(STRIP_EXECUTABLE strip)
 # This should not be stripped if cross-compiling on Windows
-if(STRIP_EXECUTABLE AND NOT DEFINED $ENV{DIST_EXTRA_CONFIG})
-  ExternalProject_Add_Step(build_ninja strip_executables
-    DEPENDEES ${NINJA_BUILD_LAST_STEP}
-    COMMENT "Stripping CMake executables"
-    COMMAND ${STRIP_EXECUTABLE} ${ninja_executable}
-    USES_TERMINAL 1
-    )
-  set(NINJA_BUILD_LAST_STEP "strip_executables")
+if(NOT DEFINED ENV{DIST_EXTRA_CONFIG})
+  find_program(STRIP_EXECUTABLE strip)
+  if(STRIP_EXECUTABLE)
+    ExternalProject_Add_Step(build_ninja strip_executables
+      DEPENDEES ${NINJA_BUILD_LAST_STEP}
+      COMMENT "Stripping CMake executables"
+      COMMAND ${STRIP_EXECUTABLE} ${ninja_executable}
+      USES_TERMINAL 1
+      )
+    set(NINJA_BUILD_LAST_STEP "strip_executables")
+  endif()
 endif()
 
 if(RUN_NINJA_TEST)
