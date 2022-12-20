@@ -4,10 +4,14 @@ import platform
 import subprocess
 import sys
 
-from ._version import get_versions
+from ._version import version as __version__
 
-__version__ = get_versions()['version']
-del get_versions
+__all__ = ["__version__", "DATA", "BIN_DIR", "ninja"]
+
+
+def __dir__(self):
+    return __all__
+
 
 try:
     from .ninja_syntax import Writer, escape, expand  # noqa: F401
