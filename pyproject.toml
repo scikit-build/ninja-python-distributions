@@ -1,9 +1,13 @@
 [build-system]
 requires = [
     "setuptools >=42",
+    "setuptools-scm[toml]",
     "scikit-build",
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "src/ninja/_version.py"
 
 [tool.cibuildwheel]
 build = "cp39-*"

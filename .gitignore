@@ -59,3 +59,9 @@ docs/_build
 .idea/*
 *.swp
 *~
+
+# Output from cibuildwheel
+/wheelhouse
+
+# Version
+_version.py

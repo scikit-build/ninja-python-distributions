@@ -13,8 +13,6 @@ from skbuild import setup
 # is already installed (c.f. https://github.com/scikit-build/cmake-python-distributions/issues/171)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-import versioneer  # noqa: E402
-
 with open('README.rst', 'r') as fp:
     readme = fp.read()
 
@@ -33,9 +31,6 @@ test_requirements = parse_requirements('requirements-test.txt')
 
 setup(
     name='ninja',
-
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
 
     author='Jean-Christophe Fillion-Robin',
     author_email='scikit-build@googlegroups.com',
