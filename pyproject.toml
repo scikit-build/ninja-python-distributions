@@ -21,6 +21,7 @@ repair-wheel-command = "python scripts/repair_wheel.py -w {dest_dir} {wheel}"
 test-extras = "test"
 test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
+environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
 
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux_{x86_64,i686}"
