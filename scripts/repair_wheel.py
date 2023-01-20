@@ -19,7 +19,7 @@ def main():
     elif sys.platform == "win32":
         os_ = "windows"
     else:
-        raise NotImplementedError(f"sys.platform '{sys.platform}' is not supported yet.")
+        raise NotImplementedError(f"sys.platform {sys.platform!r} is not supported yet.")
 
     p = argparse.ArgumentParser(description="Convert wheel to be independent of python implementation and ABI")
     p.set_defaults(prog=Path(sys.argv[0]).name)
