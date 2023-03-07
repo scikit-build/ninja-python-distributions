@@ -9,12 +9,12 @@ from ._version import version as __version__
 __all__ = ["__version__", "DATA", "BIN_DIR", "ninja"]
 
 
-def __dir__(self):
+def __dir__():
     return __all__
 
 
 try:
-    from .ninja_syntax import Writer, escape, expand  # noqa: F401
+    from .ninja_syntax import Writer, escape, expand
 except ImportError:
     # Support importing `ninja_syntax` from the source tree
     if not os.path.exists(
