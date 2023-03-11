@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Command line executable allowing to update NinjaUrls.cmake, documentation
@@ -101,19 +100,17 @@ def generate_cmake_variables(urls_and_sha256s):
         template_inputs["%s_url" % var_prefix] = urls_and_sha256s_values[0]
         template_inputs["%s_sha256" % var_prefix] = urls_and_sha256s_values[1]
 
-    cmake_variables = textwrap.dedent(
+    return textwrap.dedent(
         """
-      #-----------------------------------------------------------------------------
-      # Ninja sources
-      set(unix_source_url       "{unix_source_url}")
-      set(unix_source_sha256    "{unix_source_sha256}")
+        #-----------------------------------------------------------------------------
+        # Ninja sources
+        set(unix_source_url       "{unix_source_url}")
+        set(unix_source_sha256    "{unix_source_sha256}")
 
-      set(windows_source_url    "{win_source_url}")
-      set(windows_source_sha256 "{win_source_sha256}")
-    """
+        set(windows_source_url    "{win_source_url}")
+        set(windows_source_sha256 "{win_source_sha256}")
+        """
     ).format(**template_inputs)
-
-    return cmake_variables
 
 
 def update_cmake_urls_script(upstream_repository, version):
