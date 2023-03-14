@@ -86,7 +86,7 @@ def main():
                 # They're were also issues with pip not picking up some universal2 wheels, tag twice
                 additional_platforms.append("macosx_11_0_universal2")
 
-            platform_tag_args = ["--platform-tag", f".{'.'.join(additional_platforms)}"]
+            platform_tag_args = [f"--platform-tag=+{'.'.join(additional_platforms)}"]
 
         # make this a py2.py3 wheel
         subprocess.run(
