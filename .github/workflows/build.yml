@@ -162,4 +162,4 @@ jobs:
           path: dist
 
       - name: Upload to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v4
+        uses: pypa/gh-action-pypi-publish@release/v1
