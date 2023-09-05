@@ -25,7 +25,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.x"
@@ -60,7 +60,7 @@ jobs:
             arch: "universal2"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # required for versioneer to find tags
 
@@ -89,7 +89,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # required for versioneer to find tags
 
@@ -111,7 +111,7 @@ jobs:
         python: ["2.7", "3.6", "3.11"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         name: Install Python ${{ matrix.python }}
         if: matrix.python != '2.7'
