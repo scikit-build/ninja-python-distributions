@@ -22,4 +22,6 @@ def test_ninja_module():
 
 
 def test_ninja_package():
-    subprocess.check_call([sys.executable, "-m", "ninja", "--version"])
+    expected_version = "1.11.1.git.kitware.jobserver-1"
+    output = subprocess.check_output([sys.executable, "-m", "ninja", "--version"]).decode("ascii")
+    assert output.splitlines()[0] == expected_version
