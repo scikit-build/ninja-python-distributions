@@ -78,7 +78,7 @@ unfixable = [
   "T20",  # Removes print statements
   "F841", # Removes unused variables
 ]
-exclude = ["versioneer.py", "src/ninja/version.py"]
+exclude = ["src/ninja/version.py"]
 flake8-unused-arguments.ignore-variadic-names = true
 
 [tool.ruff.per-file-ignores]
