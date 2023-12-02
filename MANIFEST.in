@@ -8,7 +8,7 @@ include LICENSE_Apache_20
 recursive-exclude _skbuild *
 recursive-exclude Ninja-src *
 
-include versioneer.py
 include src/ninja/_version.py
+include src/ninja/_version.pyi
 include src/ninja/__init__.pyi
 include src/ninja/py.typed
