@@ -173,7 +173,7 @@ def update_tests(version):
     pattern = re.compile(r'expected_version = "\d+.\d+.\d+(\.[\w\-]+)*"')
     replacement = 'expected_version = "%s"' % version
     _update_file(os.path.join(
-        ROOT_DIR, "tests/test_distribution.py"), pattern, replacement)
+        ROOT_DIR, "tests/test_ninja.py"), pattern, replacement)
 
 
 def main():
@@ -214,7 +214,7 @@ def main():
                 Complete! Now run:
 
                 git switch -c update-to-ninja-{release}
-                git add -u NinjaUrls.cmake docs/index.rst README.rst tests/test_distribution.py docs/update_ninja_version.rst
+                git add -u NinjaUrls.cmake docs/index.rst README.rst tests/test_ninja.py docs/update_ninja_version.rst
                 git commit -m "Update to Ninja {release}"
                 gh pr create --fill --body "Created by update_ninja_version.py"
                 """

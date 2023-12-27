@@ -102,7 +102,7 @@ def bump(session: nox.Session) -> None:
         files = (
             "NinjaUrls.cmake",
             "README.rst",
-            "tests/test_distribution.py",
+            "tests/test_ninja.py",
             "docs/update_ninja_version.rst",
         )
         session.run(

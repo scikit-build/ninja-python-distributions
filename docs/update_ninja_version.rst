@@ -44,8 +44,8 @@ Classic procedure:
     Updating README.rst - done
     Updating docs/update_ninja_version.rst
     Updating docs/update_ninja_version.rst - done
-    Updating tests/test_distribution.py
-    Updating tests/test_distribution.py - done
+    Updating tests/test_ninja.py
+    Updating tests/test_ninja.py - done
 
 
 3. Create a topic named `update-to-ninja-X.Y.Z` and commit the changes.
@@ -53,7 +53,7 @@ Classic procedure:
 
     release=1.11.1.g95dee.kitware.jobserver-1
     git checkout -b update-to-ninja-${release}
-    git add NinjaUrls.cmake README.rst docs/update_ninja_version.rst tests/test_distribution.py
+    git add NinjaUrls.cmake README.rst docs/update_ninja_version.rst tests/test_ninja.py
     git commit -m "Update to Ninja ${release}"
 
 4. Create a `Pull Request`.
