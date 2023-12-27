@@ -75,6 +75,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
+          name: cibw-wheels-${{ matrix.os }}-${{ matrix.arch }}
           path: ./wheelhouse/*.whl
 
       - name: Test wheel on host Linux
@@ -98,6 +99,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
+          name: cibw-sdist
           path: dist/*.tar.gz
 
   test_sdist:
@@ -130,7 +132,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: artifact
+          name: cibw-sdist
           path: sdist
 
       - name: Install SDist
@@ -151,8 +153,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: artifact
+          pattern: cibw-*
           path: dist
+          merge-multiple: true
 
       - run: pipx run twine check --strict dist/*
 
@@ -169,8 +172,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: artifact
+          pattern: cibw-*
           path: dist
+          merge-multiple: true
 
       - name: Upload to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
