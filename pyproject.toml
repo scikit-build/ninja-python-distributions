@@ -1,27 +1,92 @@
 [build-system]
-requires = [
-    "setuptools >=42",
-    "setuptools-scm[toml]",
-    "scikit-build",
-]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core"]
+build-backend = "scikit_build_core.build"
 
-[tool.setuptools_scm]
-write_to = "src/ninja/_version.py"
+[project]
+name = "ninja"
+dynamic = ["version", "readme"]
+description = "Ninja is a small build system with a focus on speed"
+authors = [
+    { name = "Jean-Christophe Fillion-Robin", email = "scikit-build@googlegroups.com" },
+]
+keywords = [
+    "build",
+    "c++",
+    "cross-compilation",
+    "cross-platform",
+    "fortran",
+    "ninja",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Programming Language :: Fortran",
+    "Programming Language :: Python",
+    "Topic :: Software Development :: Build Tools",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+test = [
+    "coverage>=4.2",
+    "importlib_metadata>=2.0",
+    "pytest-cov>=2.7.1",
+    "pytest>=4.5.0",
+]
+
+[project.scripts]
+ninja = "ninja:ninja"
+
+[project.urls]
+"Bug Tracker" = "https://github.com/scikit-build/ninja-python-distributions/issues"
+Documentation = "https://github.com/scikit-build/ninja-python-distributions#readme"
+Download = "https://github.com/ninja-build/ninja/releases"
+Homepage = "http://ninja-build.org/"
+"Mailing list" = "https://groups.google.com/forum/#!forum/scikit-build"
+"Source Code" = "https://github.com/scikit-build/ninja-python-distributions"
+
+[tool.scikit-build]
+minimum-version = "0.9"
+build-dir = "build/{wheel_tag}"
+wheel.py-api = "py2.py3"
+wheel.expand-macos-universal-tags = true
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+metadata.readme.provider = "scikit_build_core.metadata.fancy_pypi_readme"
+
 
 [tool.cibuildwheel]
 build = "cp39-*"
 build-verbosity = 1
-before-all = [
-    'pipx install -f --pip-args="-c {project}/constraints-ci.txt" cmake',
-    'cmake --version',
-]
-before-build = "pip install -r requirements-repair.txt"
-repair-wheel-command = "python scripts/repair_wheel.py -w {dest_dir} {wheel}"
 test-extras = "test"
 test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
 environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
+
+[[tool.scikit-build.generate]]
+path = "package/_version.py"
+template = '''
+version = "${version}"
+'''
+
+[tool.setuptools_scm]
+
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/x-rst"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.rst"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "HISTORY.rst"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = ".. :changelog:"
+replacement = ""
 
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux_{x86_64,i686}"
@@ -32,22 +97,15 @@ environment = { LDFLAGS = "-static-libstdc++" }
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.9"
 
-[tool.cibuildwheel.windows]
-before-all = [
-    'pipx install -f --pip-args="-c {project}/constraints-ci.txt" cmake',
-    'cmake --version',
-    'pipx install -f --pip-args="-c {project}/constraints-ci.txt" ninja',
-    'ninja --version',
-]
-
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux_*"
 environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
 
-
 [tool.ruff]
-select = [
-  "E", "F", "W", # flake8
+src = ["src"]
+
+[tool.ruff.lint]
+extend-select = [
   "B",           # flake8-bugbear
   "I",           # isort
   "ARG",         # flake8-unused-arguments
@@ -66,21 +124,19 @@ select = [
   "NPY",         # NumPy specific rules
   "PD",          # pandas-vet
 ]
-extend-ignore = [
+ignore = [
   "PLR",    # Design related pylint codes
   "E501",   # Line too long
   "RUF005", # Python 3 needed
   "B904",   # Python 3 needed
 #  "SIM105", # Python 3 needed
 ]
-src = ["src"]
-unfixable = [
-  "T20",  # Removes print statements
-  "F841", # Removes unused variables
-]
-exclude = ["src/ninja/version.py"]
 flake8-unused-arguments.ignore-variadic-names = true
 
 [tool.ruff.per-file-ignores]
 "*.pyi" = ["ARG001"]
 "noxfile.py" = ["PLW0603"] # Could be fixed if Python 2 dropped
+
+[tool.pytest.ini_config]
+testpaths = ["tests"]
+addopts = ["-v", "--cov", "--cov-report", "xml"]

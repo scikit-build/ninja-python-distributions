@@ -145,5 +145,5 @@ if(CMAKE_CROSS_COMPILE OR NOT DEFINED ENV{DIST_EXTRA_CONFIG})
   endif()
 endif()
 
-install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION src/ninja)
-install(PROGRAMS ${ninja_executable} DESTINATION src/ninja/data/bin)
+install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION ninja)
+install(PROGRAMS ${ninja_executable} DESTINATION ninja/data/bin)
