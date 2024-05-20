@@ -124,7 +124,7 @@ jobs:
           path: sdist
 
       - name: Install SDist
-        run: pip install sdist/*.tar.gz -Ccmake.define.BUILD_CMAKE_FROM_SOURCE=OFF
+        run: pip install $(ls sdist/*.tar.gz)[test] -Ccmake.define.BUILD_CMAKE_FROM_SOURCE=OFF
 
       - name: Test installed SDist
         run: pytest ./tests
