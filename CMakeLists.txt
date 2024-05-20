@@ -82,7 +82,7 @@ endif()
 #-----------------------------------------------------------------------------
 # Build from source
 #-----------------------------------------------------------------------------
-set(Ninja_BINARY_DIR ${CMAKE_BINARY_DIR}/Ninja-build)
+set(Ninja_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/Ninja-build")
 # cache arguments
 set(_cache_args )
 foreach(var_name IN ITEMS
@@ -117,7 +117,7 @@ ExternalProject_add(build_ninja
   DEPENDS
     download_ninja_source
   )
-set(ninja_executable ${Ninja_BINARY_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX})
+set(ninja_executable "${Ninja_BINARY_DIR}/ninja${CMAKE_EXECUTABLE_SUFFIX}")
 set(NINJA_BUILD_LAST_STEP "build")
 
 # This should not be tested if cross-compiling on Windows
@@ -126,13 +126,13 @@ if(CMAKE_CROSS_COMPILE OR NOT DEFINED ENV{DIST_EXTRA_CONFIG})
     ExternalProject_Add_Step(build_ninja run_ninja_test_suite
       DEPENDEES ${NINJA_BUILD_LAST_STEP}
       COMMENT "Running Ninja test suite"
-      COMMAND ${Ninja_BINARY_DIR}/ninja_test${CMAKE_EXECUTABLE_SUFFIX}
-      WORKING_DIRECTORY ${Ninja_BINARY_DIR}
+      COMMAND "${Ninja_BINARY_DIR}/ninja_test${CMAKE_EXECUTABLE_SUFFIX}"
+      WORKING_DIRECTORY "${Ninja_BINARY_DIR}"
       USES_TERMINAL 1
       )
     set(NINJA_BUILD_LAST_STEP "run_ninja_test_suite")
   endif()
 endif()
 
-install(FILES ${Ninja_SOURCE_DIR}/misc/ninja_syntax.py DESTINATION ninja)
+install(FILES "${Ninja_SOURCE_DIR}/misc/ninja_syntax.py" DESTINATION ninja)
 install(PROGRAMS ${ninja_executable} DESTINATION ninja/data/bin)
