@@ -1,50 +1,44 @@
 # -*- coding: utf-8 -*-
 import os
-import platform
 import subprocess
 import sys
+import sysconfig
 
 from ._version import version as __version__
+from .ninja_syntax import Writer, escape, expand
 
-__all__ = ["__version__", "DATA", "BIN_DIR", "ninja"]
+__all__ = ["__version__", "DATA", "BIN_DIR", "ninja", "Writer", "escape", "expand"]
 
 
 def __dir__():
     return __all__
 
 
-try:
-    from .ninja_syntax import Writer, escape, expand
-except ImportError:
-    # Support importing `ninja_syntax` from the source tree
-    if not os.path.exists(
-            os.path.join(os.path.dirname(__file__), 'ninja_syntax.py')):
-        sys.path.insert(0, os.path.abspath(os.path.join(
-            os.path.dirname(__file__), '../../Ninja-src/misc')))
-    from ninja_syntax import Writer, escape, expand  # noqa: F401
+def _get_ninja_dir():
+    ninja_exes = {"ninja" + sysconfig.get_config_var("EXE"), "ninja"}
+    for ninja_exe in ninja_exes:
+        path = os.path.join(sysconfig.get_path("scripts"), ninja_exe)
+        if os.path.isfile(path):
+            return os.path.dirname(path)
 
-DATA = os.path.join(os.path.dirname(__file__), 'data')
+    if sys.version_info >= (3, 10):
+        user_scheme = sysconfig.get_preferred_scheme("user")
+    elif os.name == "nt":
+        user_scheme = "nt_user"
+    elif sys.platform == "darwin" and sys._framework:
+        user_scheme = "osx_framework_user"
+    else:
+        user_scheme = "posix_user"
 
-# Support running tests from the source tree
-if not os.path.exists(DATA):
-    from skbuild.constants import CMAKE_INSTALL_DIR as SKBUILD_CMAKE_INSTALL_DIR
-    from skbuild.constants import set_skbuild_plat_name
+    for ninja_exe in ninja_exes:
+        path = os.path.join(sysconfig.get_path("scripts", scheme=user_scheme), ninja_exe)
 
-    if platform.system().lower() == "darwin":
-        # Since building the project specifying --plat-name or CMAKE_OSX_* variables
-        # leads to different SKBUILD_DIR, the code below attempt to guess the most
-        # likely plat-name.
-        _skbuild_dirs = os.listdir(os.path.join(os.path.dirname(__file__), '..', '..', '_skbuild'))
-        if _skbuild_dirs:
-            _likely_plat_name = '-'.join(_skbuild_dirs[0].split('-')[:3])
-            set_skbuild_plat_name(_likely_plat_name)
+        if os.path.isfile(path):
+            return os.path.dirname(path)
 
-    _data = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), '..', '..', SKBUILD_CMAKE_INSTALL_DIR(), 'src/ninja/data'))
-    if os.path.exists(_data):
-        DATA = _data
+    return None
 
-BIN_DIR = os.path.join(DATA, 'bin')
+BIN_DIR = _get_ninja_dir()
 
 
 def _program(name, args):

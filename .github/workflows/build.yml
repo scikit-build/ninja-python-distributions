@@ -40,7 +40,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-20.04
             arch: "x86_64"
           - os: ubuntu-22.04
             arch: "i686"
@@ -78,12 +78,23 @@ jobs:
           name: cibw-wheels-${{ matrix.os }}-${{ matrix.arch }}
           path: ./wheelhouse/*.whl
 
+      - name: Install Ubuntu Python 2.7
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends python2 python3-virtualenv
+          virtualenv -p python2 ${HOME}/cp27
+          ${HOME}/cp27/bin/python -m pip install -U pip
+          ${HOME}/cp27/bin/python -m pip install -U setuptools wheel
+          echo "${HOME}/cp27/bin" >> $GITHUB_PATH
+
       - name: Test wheel on host Linux
         if: runner.os == 'Linux' && matrix.arch == 'x86_64'
         run: |
           pip install wheelhouse/*manylinux*x86_64*.whl
           ninja --version
           python -m ninja --version
+          python --version
 
   build_sdist:
     name: Build source distribution
