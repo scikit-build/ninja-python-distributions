@@ -38,7 +38,7 @@ def _get_ninja_dir():
         return path
 
     # Fallback to python location
-    path = os.path.dirname(sys.executable) 
+    path = os.path.dirname(sys.executable)
     if os.path.isfile(os.path.join(path, ninja_exe)):
         return path
 
