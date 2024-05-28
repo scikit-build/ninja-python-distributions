@@ -1,4 +1,0 @@
-coverage>=4.2
-importlib_metadata>=2.0
-pytest>=4.5.0
-pytest-cov>=2.7.1
