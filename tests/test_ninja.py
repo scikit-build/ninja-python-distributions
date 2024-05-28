@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+from __future__ import annotations
+
 import os
 import subprocess
 import sys
@@ -14,7 +15,7 @@ from . import push_argv
 
 def _run(program, args):
     func = getattr(ninja, program)
-    args = ["%s.py" % program] + args
+    args = ["{program}.py", *args]
     with push_argv(args), pytest.raises(SystemExit) as excinfo:
         func()
     assert excinfo.value.code == 0

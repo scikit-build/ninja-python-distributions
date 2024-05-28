@@ -31,13 +31,14 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Typing :: Typed",
 ]
+requires-python = ">=3.7"
 
 [project.optional-dependencies]
 test = [
     "coverage>=4.2",
     "importlib_metadata>=2.0",
-    "pytest-cov>=2.7.1",
-    "pytest>=4.5.0",
+    "pytest-cov>=3",
+    "pytest>=6.0",
 ]
 
 [project.urls]
@@ -51,7 +52,7 @@ Homepage = "http://ninja-build.org/"
 [tool.scikit-build]
 minimum-version = "0.9"
 build-dir = "build/{wheel_tag}"
-wheel.py-api = "py2.py3"
+wheel.py-api = "py3"
 wheel.expand-macos-universal-tags = true
 metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
 metadata.readme.provider = "scikit_build_core.metadata.fancy_pypi_readme"
@@ -101,18 +102,40 @@ MACOSX_DEPLOYMENT_TARGET = "10.9"
 select = "*-musllinux_*"
 environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
 
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+xfail_strict = true
+filterwarnings = ["error"]
+log_cli_level = "info"
+testpaths = [ "tests" ]
+
+
+[tool.mypy]
+warn_unused_configs = true
+files = "src"
+python_version = "3.8"
+strict = true
+enable_error_code = ["ignore-without-code", "truthy-bool", "redundant-expr"]
+warn_unreachable = true
+
+
 [tool.ruff]
 src = ["src"]
 
 [tool.ruff.lint]
 extend-select = [
-  "B",           # flake8-bugbear
-  "I",           # isort
   "ARG",         # flake8-unused-arguments
+  "B",           # flake8-bugbear
   "C4",          # flake8-comprehensions
+  "EXE",         # flake8-executable
+  "G",           # flake8-logging-format
+  "I",           # isort
   "ICN",         # flake8-import-conventions
   "ISC",         # flake8-implicit-str-concat
-  "G",           # flake8-logging-format
+  "NPY",         # NumPy specific rules
+  "PD",          # pandas-vet
   "PGH",         # pygrep-hooks
   "PIE",         # flake8-pie
   "PL",          # pylint
@@ -120,22 +143,17 @@ extend-select = [
   "RET",         # flake8-return
   "RUF",         # Ruff-specific
   "SIM",         # flake8-simplify
-  "EXE",         # flake8-executable
-  "NPY",         # NumPy specific rules
-  "PD",          # pandas-vet
+  "UP",          # pyupgrade
 ]
 ignore = [
   "PLR",    # Design related pylint codes
   "E501",   # Line too long
-  "RUF005", # Python 3 needed
-  "B904",   # Python 3 needed
-#  "SIM105", # Python 3 needed
 ]
+isort.required-imports = ["from __future__ import annotations"]
 flake8-unused-arguments.ignore-variadic-names = true
 
 [tool.ruff.lint.per-file-ignores]
 "*.pyi" = ["ARG001"]
-"noxfile.py" = ["PLW0603"] # Could be fixed if Python 2 dropped
 
 [tool.pytest.ini_config]
 testpaths = ["tests"]
