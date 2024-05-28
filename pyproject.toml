@@ -90,6 +90,8 @@ environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
 
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux_{x86_64,i686}"
+manylinux-x86_64-image = "manylinux2010"
+manylinux-i686-image = "manylinux2010"
 environment = { LDFLAGS = "-static-libstdc++" }
 
 [tool.cibuildwheel.macos.environment]
