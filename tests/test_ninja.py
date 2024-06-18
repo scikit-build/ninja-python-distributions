@@ -15,7 +15,7 @@ from . import push_argv
 
 def _run(program, args):
     func = getattr(ninja, program)
-    args = ["{program}.py", *args]
+    args = [f"{program}.py", *args]
     with push_argv(args), pytest.raises(SystemExit) as excinfo:
         func()
     assert excinfo.value.code == 0
