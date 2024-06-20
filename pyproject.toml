@@ -90,6 +90,9 @@ test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
 environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
 
+[tool.cibuildwheel.macos.environment]
+MACOSX_DEPLOYMENT_TARGET = "10.9"
+
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux_{x86_64,i686}"
 manylinux-x86_64-image = "manylinux2010"
@@ -97,12 +100,13 @@ manylinux-i686-image = "manylinux2010"
 build-frontend = "pip"
 environment = { LDFLAGS = "-static-libstdc++" }
 
-[tool.cibuildwheel.macos.environment]
-MACOSX_DEPLOYMENT_TARGET = "10.9"
-
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux_*"
 environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
+
+[[tool.cibuildwheel.overrides]]
+selet = "*-musllinux_s390x"
+build-frontend = "pip"
 
 
 [tool.pytest.ini_options]
