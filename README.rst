@@ -48,6 +48,11 @@ Miscellaneous
 * Source code: https://github.com/scikit-build/ninja-python-distributions
 * Mailing list: https://groups.google.com/forum/#!forum/scikit-build
 
+Python Version Support
+----------------------
+
+Versions after 1.11.1 no longer support Python 2-3.6, and require manylinux2010+ on linux.
+
 License
 -------
 

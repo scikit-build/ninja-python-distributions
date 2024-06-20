@@ -1,10 +1,13 @@
-# -*- coding: utf-8 -*-
+from __future__ import annotations
+
 import argparse
 import sys
 from pathlib import Path
 
 import nox
 
+nox.needs_version = ">=2024.4.15"
+nox.options.default_venv_backend = "uv|virtualenv"
 nox.options.sessions = ["lint", "build", "tests"]
 
 if sys.platform.startswith("darwin"):
@@ -25,7 +28,7 @@ def build(session: nox.Session) -> str:
     """
     Make an SDist and a wheel. Only runs once.
     """
-    global built
+    global built # noqa: PLW0603
     if not built:
         session.log(
             "The files produced locally by this job are not intended to be redistributable"
@@ -48,7 +51,7 @@ def lint(session: nox.Session) -> str:
     Run linters on the codebase.
     """
     session.install("pre-commit")
-    session.run("pre-commit", "run", "-a")
+    session.run("pre-commit", "run", "-a", *session.posargs)
 
 
 @nox.session
@@ -92,7 +95,8 @@ def bump(session: nox.Session) -> None:
     else:
         version = args.version
 
-    session.install("requests")
+    deps = nox.project.load_toml("scripts/update_ninja_version.py")["dependencies"]
+    session.install(*deps)
 
     extra = ["--quiet"] if args.commit else []
     session.run("python", "scripts/update_ninja_version.py", "--upstream-repository", args.upstream_repository, version, *extra)

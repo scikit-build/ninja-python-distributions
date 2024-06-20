@@ -1,8 +1,11 @@
-# -*- coding: utf-8 -*-
+from __future__ import annotations
+
 import os
 import subprocess
 import sys
 import sysconfig
+from collections.abc import Iterable
+from typing import NoReturn
 
 from ._version import version as __version__
 from .ninja_syntax import Writer, escape, expand
@@ -10,11 +13,11 @@ from .ninja_syntax import Writer, escape, expand
 __all__ = ["__version__", "DATA", "BIN_DIR", "ninja", "Writer", "escape", "expand"]
 
 
-def __dir__():
+def __dir__() -> list[str]:
     return __all__
 
 
-def _get_ninja_dir():
+def _get_ninja_dir() -> str:
     ninja_exe = "ninja" + sysconfig.get_config_var("EXE")
 
     # Default path
@@ -27,7 +30,7 @@ def _get_ninja_dir():
         user_scheme = sysconfig.get_preferred_scheme("user")
     elif os.name == "nt":
         user_scheme = "nt_user"
-    elif sys.platform.startswith("darwin") and sys._framework:
+    elif sys.platform.startswith("darwin") and getattr(sys, "_framework", None):
         user_scheme = "osx_framework_user"
     else:
         user_scheme = "posix_user"
@@ -47,10 +50,11 @@ def _get_ninja_dir():
 
 BIN_DIR = _get_ninja_dir()
 
-def _program(name, args):
+
+def _program(name: str, args: Iterable[str]) -> int:
     cmd = os.path.join(BIN_DIR, name)
-    return subprocess.call([cmd] + args, close_fds=False)
+    return subprocess.call([cmd, *args], close_fds=False)
 
 
-def ninja():
+def ninja() -> NoReturn:
     raise SystemExit(_program('ninja', sys.argv[1:]))

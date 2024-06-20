@@ -1,8 +1,12 @@
-# -*- coding: utf-8 -*-
+# /// script
+# dependencies = ["requests"]
+# ///
+
 """
 Command line executable allowing to update NinjaUrls.cmake, documentation
 and tests given a Ninja version.
 """
+from __future__ import annotations
 
 import argparse
 import contextlib
@@ -12,13 +16,7 @@ import re
 import tempfile
 import textwrap
 
-try:
-    from requests import request
-except ImportError:
-    raise SystemExit(
-        "requests not available: "
-        "consider installing it running 'pip install requests'"
-    )
+from requests import request
 
 ROOT_DIR = os.path.join(os.path.dirname(__file__), "..")
 
@@ -31,7 +29,7 @@ def _log(txt, verbose=True):
         print(txt)
     yield
     if verbose:
-        print("%s - done" % txt)
+        print(f"{txt} - done")
 
 
 def _download_file(download_url, filename):
@@ -67,7 +65,7 @@ def _hash_sum(filepath, algorithm="sha256", block_size=2 ** 20):
 
 def _download_and_compute_sha256(url, filename):
     filepath = os.path.join(tempfile.gettempdir(), filename)
-    with _log("Downloading %s" % url):
+    with _log(f"Downloading {url}"):
         _download_file(url, filepath)
         sha256 = _hash_sum(filepath, algorithm="sha256")
     return url, sha256
@@ -77,7 +75,7 @@ def get_ninja_archive_urls_and_sha256s(upstream_repository, version, verbose=Fal
     tag_name = f"v{version}"
     files_base_url = f"https://github.com/{upstream_repository}/archive/{tag_name}"
 
-    with _log("Collecting URLs and SHA256s from '%s'" % files_base_url):
+    with _log(f"Collecting URLs and SHA256s from '{files_base_url}'"):
 
         # Get SHA256s and URLs
         urls = {
@@ -87,7 +85,7 @@ def get_ninja_archive_urls_and_sha256s(upstream_repository, version, verbose=Fal
 
         if verbose:
             for identifier, (url, sha256) in urls.items():
-                print("[{}]\n{}\n{}\n".format(identifier, url, sha256))
+                print(f"[{identifier}]\n{url}\n{sha256}\n")
 
         return urls
 
@@ -97,8 +95,8 @@ def generate_cmake_variables(urls_and_sha256s):
 
     # Get SHA256s and URLs
     for var_prefix, urls_and_sha256s_values in urls_and_sha256s.items():
-        template_inputs["%s_url" % var_prefix] = urls_and_sha256s_values[0]
-        template_inputs["%s_sha256" % var_prefix] = urls_and_sha256s_values[1]
+        template_inputs[f"{var_prefix}_url"] = urls_and_sha256s_values[0]
+        template_inputs[f"{var_prefix}_sha256"] = urls_and_sha256s_values[1]
 
     return textwrap.dedent(
         """
@@ -118,16 +116,16 @@ def update_cmake_urls_script(upstream_repository, version):
     cmake_urls_filename = "NinjaUrls.cmake"
     cmake_urls_filepath = os.path.join(ROOT_DIR, cmake_urls_filename)
 
-    msg = "Updating '{}' with Ninja version {}".format(cmake_urls_filename, version)
+    msg = f"Updating '{cmake_urls_filename}' with Ninja version {version}"
     with _log(msg), open(cmake_urls_filepath, "w") as cmake_file:
         cmake_file.write(content)
 
 
 def _update_file(filepath, regex, replacement, verbose=True):
-    msg = "Updating %s" % os.path.relpath(filepath, ROOT_DIR)
+    msg = f"Updating {os.path.relpath(filepath, ROOT_DIR)}"
     with _log(msg, verbose=verbose):
         pattern = re.compile(regex)
-        with open(filepath, "r") as doc_file:
+        with open(filepath) as doc_file:
             lines = doc_file.readlines()
             updated_content = []
             for line in lines:
@@ -138,7 +136,7 @@ def _update_file(filepath, regex, replacement, verbose=True):
 
 def update_docs(upstream_repository, version):
     pattern = re.compile(r"ninja \d+.\d+.\d+(\.[\w\-]+)*")
-    replacement = "ninja %s" % version
+    replacement = f"ninja {version}"
     _update_file(
         os.path.join(ROOT_DIR, "README.rst"),
         pattern, replacement)
@@ -171,7 +169,7 @@ def update_tests(version):
         version = ".".join(parts)
 
     pattern = re.compile(r'expected_version = "\d+.\d+.\d+(\.[\w\-]+)*"')
-    replacement = 'expected_version = "%s"' % version
+    replacement = f'expected_version = "{version}"'
     _update_file(os.path.join(
         ROOT_DIR, "tests/test_ninja.py"), pattern, replacement)
 

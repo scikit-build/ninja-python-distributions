@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+from __future__ import annotations
+
 from ninja import ninja
 
 if __name__ == '__main__':
