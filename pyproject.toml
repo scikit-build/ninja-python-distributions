@@ -105,7 +105,7 @@ select = "*-musllinux_*"
 environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
 
 [[tool.cibuildwheel.overrides]]
-selet = "*-musllinux_s390x"
+select = "*-musllinux_s390x"
 build-frontend = "pip"
 
 
