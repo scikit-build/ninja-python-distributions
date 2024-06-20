@@ -51,7 +51,6 @@ Homepage = "http://ninja-build.org/"
 
 [tool.scikit-build]
 minimum-version = "0.9"
-build-frontend = "build[uv]"
 build-dir = "build/{wheel_tag}"
 wheel.py-api = "py3"
 wheel.expand-macos-universal-tags = true
@@ -84,6 +83,7 @@ replacement = ""
 
 [tool.cibuildwheel]
 build = "cp39-*"
+build-frontend = "build[uv]"
 build-verbosity = 1
 test-extras = "test"
 test-command = "pytest {project}/tests"
