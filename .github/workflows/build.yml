@@ -71,7 +71,7 @@ jobs:
       - uses: yezz123/setup-uv@v4
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.20.0
+        uses: pypa/cibuildwheel@v2.21.1
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
 
