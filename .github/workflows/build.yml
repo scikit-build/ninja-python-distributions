@@ -132,7 +132,7 @@ jobs:
         run: pip install $(ls sdist/*.tar.gz)[test] -Ccmake.define.BUILD_CMAKE_FROM_SOURCE=OFF
 
       - name: Test installed SDist
-        run: pytest ./tests
+        run: pip check && pytest ./tests
 
   check_dist:
     name: Check dist

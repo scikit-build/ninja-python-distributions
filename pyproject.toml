@@ -105,6 +105,8 @@ manylinux-x86_64-image = "manylinux2010"
 manylinux-i686-image = "manylinux2010"
 build-frontend = "pip"
 environment = { LDFLAGS = "-static-libstdc++" }
+inherit.test-command = "prepend"
+test-command = "pip check"
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux_*"
@@ -113,6 +115,8 @@ environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux_s390x"
 build-frontend = "pip"
+inherit.test-command = "prepend"
+test-command = "pip check"
 
 
 [tool.pytest.ini_options]
