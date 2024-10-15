@@ -89,6 +89,12 @@ test-extras = "test"
 test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
 environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
+musllinux-x86_64-image = "musllinux_1_1"
+musllinux-i686-image = "musllinux_1_1"
+musllinux-aarch64-image = "musllinux_1_1"
+musllinux-ppc64le-image = "musllinux_1_1"
+musllinux-s390x-image = "musllinux_1_1"
+musllinux-armv7l-image = "musllinux_1_2"
 
 [tool.cibuildwheel.macos.environment]
 MACOSX_DEPLOYMENT_TARGET = "10.9"
