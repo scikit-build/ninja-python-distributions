@@ -51,7 +51,7 @@ Miscellaneous
 Python Version Support
 ----------------------
 
-Versions after 1.11.1 no longer support Python 2-3.6, and require manylinux2010+ on linux.
+Versions after 1.11.1.1 no longer support Python 2-3.6, and require manylinux2010+ on linux.
 
 License
 -------
