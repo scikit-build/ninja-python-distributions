@@ -1,6 +1,7 @@
 [build-system]
-requires = ["scikit-build-core"]
-build-backend = "scikit_build_core.build"
+requires = ["scikit-build-core>=0.10"]
+build-backend = "backend"
+backend-path = ["_build_backend"]
 
 [project]
 name = "ninja"
@@ -50,7 +51,8 @@ Homepage = "http://ninja-build.org/"
 "Source Code" = "https://github.com/scikit-build/ninja-python-distributions"
 
 [tool.scikit-build]
-minimum-version = "0.9"
+minimum-version = "build-system.requires"
+ninja.make-fallback = true
 build-dir = "build/{wheel_tag}"
 wheel.py-api = "py3"
 wheel.expand-macos-universal-tags = true
@@ -88,6 +90,7 @@ build-verbosity = 1
 test-extras = "test"
 test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
+environment = { NINJA_PYTHON_DIST_ALLOW_NINJA_DEP = "1" }
 environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
 musllinux-x86_64-image = "musllinux_1_1"
 musllinux-i686-image = "musllinux_1_1"
@@ -96,20 +99,24 @@ musllinux-ppc64le-image = "musllinux_1_1"
 musllinux-s390x-image = "musllinux_1_1"
 musllinux-armv7l-image = "musllinux_1_2"
 
-[tool.cibuildwheel.macos.environment]
-MACOSX_DEPLOYMENT_TARGET = "10.9"
+[[tool.cibuildwheel.overrides]]
+select = "*-macos*"
+inherit.environment = "append"
+environment = { MACOSX_DEPLOYMENT_TARGET = "10.9" }
 
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux_{x86_64,i686}"
 manylinux-x86_64-image = "manylinux2010"
 manylinux-i686-image = "manylinux2010"
 build-frontend = "pip"
+inherit.environment = "append"
 environment = { LDFLAGS = "-static-libstdc++" }
 inherit.test-command = "prepend"
 test-command = "pip check"
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux_*"
+inherit.environment = "append"
 environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
 
 [[tool.cibuildwheel.overrides]]

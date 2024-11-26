@@ -128,8 +128,11 @@ jobs:
           name: cibw-sdist
           path: sdist
 
+      - name: Ensure Ninja not present on the system
+        run: if which ninja; then false; fi
+
       - name: Install SDist
-        run: pip install $(ls sdist/*.tar.gz)[test] -Ccmake.define.BUILD_CMAKE_FROM_SOURCE=OFF
+        run: pip install --no-binary=ninja $(ls sdist/*.tar.gz)[test] -Ccmake.define.BUILD_CMAKE_FROM_SOURCE=OFF
 
       - name: Test installed SDist
         run: pip check && pytest ./tests
