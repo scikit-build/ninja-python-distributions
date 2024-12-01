@@ -98,6 +98,13 @@ musllinux-ppc64le-image = "musllinux_1_1"
 musllinux-s390x-image = "musllinux_1_1"
 musllinux-armv7l-image = "musllinux_1_2"
 
+[tool.cibuildwheel.config-settings]
+"cmake.define.RUN_NINJA_TEST" = "ON"
+
+[[tool.cibuildwheel.overrides]]
+select = ["*-win_arm64",]
+config-settings."cmake.define.RUN_NINJA_TEST" = "OFF"
+
 [[tool.cibuildwheel.overrides]]
 select = "*-macos*"
 inherit.environment = "append"

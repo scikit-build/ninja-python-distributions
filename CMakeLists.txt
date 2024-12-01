@@ -5,13 +5,11 @@ project(NinjaPythonDistributions)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
 # Options
-option(BUILD_VERBOSE "Display additional information while building (e.g download progress, ...)" OFF)
-option(RUN_NINJA_TEST "Run Ninja test suite" ON)
+option(RUN_NINJA_TEST "Run Ninja test suite" OFF)
 
 message(STATUS "************************************")
 message(STATUS "Ninja Python Distribution")
 message(STATUS "")
-message(STATUS "  BUILD_VERBOSE  : ${BUILD_VERBOSE}")
 message(STATUS "  RUN_NINJA_TEST : ${RUN_NINJA_TEST}")
 message(STATUS "************************************")
 
@@ -21,6 +19,14 @@ FetchContent_Declare(
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ninja-upstream
 )
 FetchContent_MakeAvailable(ninja)
+
+if(RUN_NINJA_TEST)
+  add_custom_target(
+    run_ninja_test ALL "$<TARGET_FILE:ninja_test>"
+    DEPENDS ninja_test
+    WORKING_DIRECTORY "$<TARGET_FILE_DIR:ninja_test>"
+  )
+endif()
 
 install(TARGETS ninja COMPONENT python DESTINATION "${SKBUILD_SCRIPTS_DIR}")
 install(FILES "${ninja_SOURCE_DIR}/misc/ninja_syntax.py" COMPONENT python DESTINATION ninja)
