@@ -1,0 +1,3 @@
+[submodule "ninja-upstream"]
+	path = ninja-upstream
+	url = https://github.com/Kitware/ninja.git
