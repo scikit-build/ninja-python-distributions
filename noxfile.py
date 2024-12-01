@@ -93,16 +93,13 @@ def bump(session: nox.Session) -> None:
     else:
         version = args.version
 
-    deps = nox.project.load_toml("scripts/update_ninja_version.py")["dependencies"]
-    session.install(*deps)
-
     extra = ["--quiet"] if args.commit else []
     session.run("python", "scripts/update_ninja_version.py", "--upstream-repository", args.upstream_repository, version, *extra)
 
     if args.commit:
         session.run("git", "switch", "-c", f"update-to-ninja-{version}", external=True)
         files = (
-            "NinjaUrls.cmake",
+            "ninja-upstream",
             "README.rst",
             "tests/test_ninja.py",
             "docs/update_ninja_version.rst",
