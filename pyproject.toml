@@ -52,6 +52,7 @@ Homepage = "http://ninja-build.org/"
 
 [tool.scikit-build]
 minimum-version = "build-system.requires"
+cmake.version = "CMakeLists.txt"  # Force parsing version from CMakeLists.txt and disable fallback to '>=3.15'
 ninja.make-fallback = true
 build-dir = "build/{wheel_tag}"
 wheel.py-api = "py3"
