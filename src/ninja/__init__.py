@@ -10,7 +10,7 @@ from typing import NoReturn
 from ._version import version as __version__
 from .ninja_syntax import Writer, escape, expand
 
-__all__ = ["__version__", "DATA", "BIN_DIR", "ninja", "Writer", "escape", "expand"]
+__all__ = ["BIN_DIR", "DATA", "Writer", "__version__", "escape", "expand", "ninja"]
 
 
 def __dir__() -> list[str]:
