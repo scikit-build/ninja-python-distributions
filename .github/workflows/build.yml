@@ -23,7 +23,7 @@ env:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -40,17 +40,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: "x86_64"
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: "i686"
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04-arm
             arch: "aarch64"
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: "ppc64le"
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: "s390x"
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04-arm
             arch: "armv7l"
           - os: windows-2019
             arch: "AMD64"
@@ -68,7 +68,7 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.3.0
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && runner.arch == 'X64'
 
       - uses: yezz123/setup-uv@v4
 
@@ -93,7 +93,7 @@ jobs:
   build_sdist:
     name: Build source distribution
     needs: [lint]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -140,7 +140,7 @@ jobs:
   check_dist:
     name: Check dist
     needs: [build_wheels, build_sdist, test_sdist]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
         with:
