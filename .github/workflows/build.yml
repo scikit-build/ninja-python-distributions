@@ -67,7 +67,7 @@ jobs:
           fetch-depth: 0  # required for versioneer to find tags
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.3.0
+        uses: docker/setup-qemu-action@v3.4.0
         if: runner.os == 'Linux' && runner.arch == 'X64'
 
       - uses: yezz123/setup-uv@v4
