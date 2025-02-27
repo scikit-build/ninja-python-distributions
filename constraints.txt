@@ -1,2 +1,0 @@
-ruamel.yaml==0.16.13
-ruamel.yaml.clib==0.2.2
