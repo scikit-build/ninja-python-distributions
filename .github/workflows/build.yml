@@ -67,13 +67,13 @@ jobs:
           fetch-depth: 0  # required for versioneer to find tags
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.4.0
+        uses: docker/setup-qemu-action@v3.6.0
         if: runner.os == 'Linux' && runner.arch == 'X64'
 
       - uses: yezz123/setup-uv@v4
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.22.0
+        uses: pypa/cibuildwheel@v2.23.0
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
 
