@@ -128,8 +128,21 @@ jobs:
           name: cibw-sdist
           path: sdist
 
-      - name: Ensure Ninja not present on the system
-        run: if which ninja; then false; fi
+      - name: Remove ninja
+        shell: bash
+        run: |
+          # Remove ninja
+          set -euxo pipefail
+          # https://github.com/scikit-build/scikit-build-core/blob/3943920fa267dc83f9295279bea1c774c0916f13/src/scikit_build_core/program_search.py#L70
+          for TOOL in ninja-build ninja samu; do
+            while which ${TOOL}; do
+              if [ "$RUNNER_OS" == "Windows" ]; then
+                rm -f "$(which ${TOOL})"
+              else
+                sudo rm -f $(which -a ${TOOL})
+              fi
+            done
+          done
 
       - name: Install SDist
         run: pip install --no-binary=ninja $(ls sdist/*.tar.gz)[test]
