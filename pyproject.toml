@@ -36,9 +36,7 @@ requires-python = ">=3.7"
 
 [project.optional-dependencies]
 test = [
-    "coverage>=4.2",
     "importlib_metadata>=2.0",
-    "pytest-cov>=3",
     "pytest>=6.0",
 ]
 
@@ -129,10 +127,10 @@ test-command = "pip check"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = ["-ra", "--strict-markers", "--strict-config"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "-v"]
 xfail_strict = true
 filterwarnings = ["error"]
-log_cli_level = "info"
+log_cli_level = "INFO"
 testpaths = [ "tests" ]
 
 
@@ -178,7 +176,3 @@ flake8-unused-arguments.ignore-variadic-names = true
 
 [tool.ruff.lint.per-file-ignores]
 "*.pyi" = ["ARG001"]
-
-[tool.pytest.ini_config]
-testpaths = ["tests"]
-addopts = ["-v", "--cov", "--cov-report", "xml"]
