@@ -13,9 +13,7 @@ nox.options.sessions = ["lint", "build", "tests"]
 if sys.platform.startswith("darwin"):
     BUILD_ENV = {
         "MACOSX_DEPLOYMENT_TARGET": "10.9",
-        "CMAKE_OSX_ARCHITECTURES": "arm64;x86_64",
-        "CFLAGS": "-save-temps",
-        "CXXFLAGS": "-save-temps",
+        "ARCHFLAGS": "-arch arm64 -arch x86_64",
     }
 else:
     BUILD_ENV = {}
