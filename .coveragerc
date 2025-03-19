@@ -1,7 +1,0 @@
-[run]
-branch = True
-include = ninja/*.py
-omit = ninja/_version.py
-
-[xml]
-output = tests/coverage.xml
