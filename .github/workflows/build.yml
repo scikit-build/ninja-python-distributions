@@ -70,7 +70,9 @@ jobs:
         uses: docker/setup-qemu-action@v3.6.0
         if: runner.os == 'Linux' && runner.arch == 'X64'
 
-      - uses: yezz123/setup-uv@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: false
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.23.1
@@ -120,8 +122,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         name: Install Python ${{ matrix.python }}
+        id: python
         with:
           python-version: ${{ matrix.python }}
+          update-environment: false
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: false
+
+      - name: Setup environment
+        run: |
+          uv venv --python "${{ steps.python.outputs.python-path }}"
+          uv pip install pip --group test
 
       - uses: actions/download-artifact@v4
         with:
@@ -145,10 +158,10 @@ jobs:
           done
 
       - name: Install SDist
-        run: pip install --no-binary=ninja $(ls sdist/*.tar.gz)[test]
+        run: .venv/bin/pip install --no-binary=ninja $(ls sdist/*.tar.gz)
 
       - name: Test installed SDist
-        run: pip check && pytest ./tests
+        run: .venv/bin/pip check && .venv/bin/pytest ./tests
 
   check_dist:
     name: Check dist

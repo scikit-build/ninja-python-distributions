@@ -34,12 +34,6 @@ classifiers = [
 ]
 requires-python = ">=3.7"
 
-[project.optional-dependencies]
-test = [
-    "importlib_metadata>=2.0",
-    "pytest>=6.0",
-]
-
 [project.urls]
 "Bug Tracker" = "https://github.com/scikit-build/ninja-python-distributions/issues"
 Documentation = "https://github.com/scikit-build/ninja-python-distributions#readme"
@@ -47,6 +41,13 @@ Download = "https://github.com/ninja-build/ninja/releases"
 Homepage = "http://ninja-build.org/"
 "Mailing list" = "https://groups.google.com/forum/#!forum/scikit-build"
 "Source Code" = "https://github.com/scikit-build/ninja-python-distributions"
+
+[dependency-groups]
+test = [
+    "importlib_metadata>=2.0",
+    "pytest>=6.0",
+]
+dev = [{ include-group="test" }]
 
 [tool.scikit-build]
 minimum-version = "build-system.requires"
@@ -86,7 +87,7 @@ replacement = ""
 build = "cp39-*"
 build-frontend = "build[uv]"
 build-verbosity = 1
-test-extras = "test"
+test-groups = "test"
 test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
 environment = { NINJA_PYTHON_DIST_ALLOW_NINJA_DEP = "1" }

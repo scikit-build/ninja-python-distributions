@@ -1,3 +1,7 @@
+# /// script
+# dependencies = ["nox>=2025.2.9"]
+# ///
+
 from __future__ import annotations
 
 import argparse
@@ -6,9 +10,8 @@ from pathlib import Path
 
 import nox
 
-nox.needs_version = ">=2024.4.15"
+nox.needs_version = ">=2025.2.9"
 nox.options.default_venv_backend = "uv|virtualenv"
-nox.options.sessions = ["lint", "build", "tests"]
 
 if sys.platform.startswith("darwin"):
     BUILD_ENV = {
@@ -18,7 +21,7 @@ if sys.platform.startswith("darwin"):
 else:
     BUILD_ENV = {}
 
-built = ""
+wheel = ""
 
 
 @nox.session
@@ -26,21 +29,21 @@ def build(session: nox.Session) -> str:
     """
     Make an SDist and a wheel. Only runs once.
     """
-    global built # noqa: PLW0603
-    if not built:
-        session.log(
-            "The files produced locally by this job are not intended to be redistributable"
-        )
-        session.install("build")
-        tmpdir = session.create_tmp()
-        session.run("python", "-m", "build", "--outdir", tmpdir, env=BUILD_ENV)
-        (wheel_path,) = Path(tmpdir).glob("*.whl")
-        (sdist_path,) = Path(tmpdir).glob("*.tar.gz")
-        Path("dist").mkdir(exist_ok=True)
-        wheel_path.rename(f"dist/{wheel_path.name}")
-        sdist_path.rename(f"dist/{sdist_path.name}")
-        built = wheel_path.name
-    return built
+    session.log(
+        "The files produced locally by this job are not intended to be redistributable"
+    )
+    extra = ["--installer=uv"] if session.venv_backend == "uv" else []
+    session.install("build")
+    tmpdir = session.create_tmp()
+    session.run("python", "-m", "build", "--outdir", tmpdir, *extra, env=BUILD_ENV)
+    (wheel_path,) = Path(tmpdir).glob("*.whl")
+    (sdist_path,) = Path(tmpdir).glob("*.tar.gz")
+    Path("dist").mkdir(exist_ok=True)
+    wheel_path.rename(f"dist/{wheel_path.name}")
+    sdist_path.rename(f"dist/{sdist_path.name}")
+
+    global wheel  # noqa: PLW0603
+    wheel = f"dist/{wheel_path.name}"
 
 
 @nox.session
@@ -52,17 +55,18 @@ def lint(session: nox.Session) -> str:
     session.run("pre-commit", "run", "-a", *session.posargs)
 
 
-@nox.session
+@nox.session(requires=["build"])
 def tests(session: nox.Session) -> str:
     """
     Run the tests.
     """
-    wheel = build(session)
-    session.install(f"./dist/{wheel}[test]")
+    pyproject = nox.project.load_toml("pyproject.toml")
+    deps = nox.project.dependency_groups(pyproject, "test")
+    session.install(wheel, *deps)
     session.run("pytest", *session.posargs)
 
 
-@nox.session
+@nox.session(default=False)
 def bump(session: nox.Session) -> None:
     """
     Set to a new version, use -- <version>, otherwise will use the latest version.
