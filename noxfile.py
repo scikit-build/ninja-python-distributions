@@ -122,3 +122,7 @@ def bump(session: nox.Session) -> None:
         session.log(
             'Complete! Now run: gh pr create --fill --body "Created by running `nox -s bump -- --commit`"'
         )
+
+
+if __name__ == "__main__":
+    nox.main()
