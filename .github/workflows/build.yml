@@ -76,7 +76,7 @@ jobs:
           enable-cache: false
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.23.1
+        uses: pypa/cibuildwheel@v2.23.2
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
 
