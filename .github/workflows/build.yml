@@ -71,12 +71,12 @@ jobs:
         uses: docker/setup-qemu-action@v3.6.0
         if: runner.os == 'Linux' && runner.arch == 'X64'
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: false
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.23.2
+        uses: pypa/cibuildwheel@v2.23
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
 
@@ -129,7 +129,7 @@ jobs:
           python-version: ${{ matrix.python }}
           update-environment: false
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: false
 
