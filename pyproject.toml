@@ -93,12 +93,15 @@ test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
 environment = { NINJA_PYTHON_DIST_ALLOW_NINJA_DEP = "1" }
 environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
-musllinux-x86_64-image = "musllinux_1_1"
-musllinux-i686-image = "musllinux_1_1"
-musllinux-aarch64-image = "musllinux_1_1"
-musllinux-ppc64le-image = "musllinux_1_1"
-musllinux-s390x-image = "musllinux_1_1"
-musllinux-armv7l-image = "musllinux_1_2"
+manylinux-x86_64-image = "quay.io/pypa/manylinux2010_x86_64:latest"
+manylinux-i686-image = "quay.io/pypa/manylinux2010_i686:latest"
+manylinux-pypy_x86_64-image = "manylinux2014"
+manylinux-aarch64-image = "manylinux2014"
+musllinux-x86_64-image = "quay.io/pypa/musllinux_1_1_x86_64:latest"
+musllinux-i686-image = "quay.io/pypa/musllinux_1_1_i686:latest"
+musllinux-aarch64-image = "quay.io/pypa/musllinux_1_1_aarch64:latest"
+musllinux-ppc64le-image = "quay.io/pypa/musllinux_1_1_ppc64le:latest"
+musllinux-s390x-image = "quay.io/pypa/musllinux_1_1_s390x:latest"
 
 [tool.cibuildwheel.config-settings]
 "cmake.define.RUN_NINJA_TEST" = "ON"
@@ -114,8 +117,6 @@ environment = { MACOSX_DEPLOYMENT_TARGET = "10.9" }
 
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux_{x86_64,i686}"
-manylinux-x86_64-image = "manylinux2010"
-manylinux-i686-image = "manylinux2010"
 build-frontend = "pip"
 inherit.environment = "append"
 environment = { LDFLAGS = "-static-libstdc++" }
