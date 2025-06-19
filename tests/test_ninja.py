@@ -36,13 +36,13 @@ def test_ninja_module():
 
 
 def test_ninja_package():
-    expected_version = "1.11.1.git.kitware.jobserver-1"
+    expected_version = "1.13.0"
     output = subprocess.check_output([sys.executable, "-m", "ninja", "--version"]).decode("ascii")
     assert output.splitlines()[0] == expected_version
 
 
 def test_ninja_script():
-    expected_version = "1.11.1.git.kitware.jobserver-1"
+    expected_version = "1.13.0"
     scripts = _get_scripts()
     assert len(scripts) == 1
     assert scripts[0].stem == "ninja"

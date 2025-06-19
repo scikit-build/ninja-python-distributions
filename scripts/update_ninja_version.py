@@ -102,7 +102,7 @@ def main():
         "--upstream-repository",
         metavar="UPSTREAM_REPOSITORY",
         choices=["Kitware/ninja", "ninja-build/ninja"],
-        default="Kitware/ninja",
+        default="ninja-build/ninja",
         help="Ninja upstream repository",
     )
     parser.add_argument(

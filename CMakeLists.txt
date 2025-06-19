@@ -22,7 +22,7 @@ FetchContent_MakeAvailable(ninja)
 
 if(RUN_NINJA_TEST)
   add_custom_target(
-    run_ninja_test ALL "$<TARGET_FILE:ninja_test>"
+    run_ninja_test ALL "$<TARGET_FILE:ninja_test>" ${TEST_OPTS}
     DEPENDS ninja_test
     WORKING_DIRECTORY "$<TARGET_FILE_DIR:ninja_test>"
   )
