@@ -4,6 +4,16 @@ project(NinjaPythonDistributions)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
+# Verify that the Ninja source directory is available
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ninja-upstream/CMakeLists.txt")
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git")
+    set(_details "Make sure to initialize submodules: git submodule update --init --recursive.")
+  else()
+    set(_details "Source distribution appears to be incomplete or invalid.")
+  endif()
+  message(FATAL_ERROR "Missing ninja-upstream sources at [${CMAKE_CURRENT_SOURCE_DIR}/ninja-upstream]. ${_details}")
+endif()
+
 # Options
 option(RUN_NINJA_TEST "Run Ninja test suite" OFF)
 
