@@ -131,7 +131,15 @@ environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
 select = "*-musllinux_s390x"
 build-frontend = "pip"
 inherit.test-command = "prepend"
+inherit.config-settings = "append"
 test-command = "pip check"
+
+# Doesn't account for endianness in 1.13.0 https://github.com/ninja-build/ninja/issues/2614
+[[tool.cibuildwheel.overrides]]
+select = "*_s390x"
+inherit.config-settings = "append"
+config-settings = {"cmake.define.TEST_OPTS" = "--gtest_filter=-DepsLogTest.MalformedDepsLog"}
+
 
 
 [tool.pytest.ini_options]
