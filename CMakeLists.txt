@@ -13,12 +13,7 @@ message(STATUS "")
 message(STATUS "  RUN_NINJA_TEST : ${RUN_NINJA_TEST}")
 message(STATUS "************************************")
 
-include(FetchContent)
-FetchContent_Declare(
-  ninja
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ninja-upstream
-)
-FetchContent_MakeAvailable(ninja)
+add_subdirectory(ninja-upstream)
 
 if(RUN_NINJA_TEST)
   add_custom_target(
