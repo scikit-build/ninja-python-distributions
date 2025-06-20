@@ -12,6 +12,7 @@ import ninja
 
 from . import push_argv
 
+MSVC_DEPFILE = ".msvcdepfile-1" if sys.platform.startswith("win32") else ""
 
 def _run(program, args):
     func = getattr(ninja, program)
@@ -36,13 +37,13 @@ def test_ninja_module():
 
 
 def test_ninja_package():
-    expected_version = "1.13.0"
+    expected_version = f"1.12.1.git.kitware.jobserver-1{MSVC_DEPFILE}"
     output = subprocess.check_output([sys.executable, "-m", "ninja", "--version"]).decode("ascii")
     assert output.splitlines()[0] == expected_version
 
 
 def test_ninja_script():
-    expected_version = "1.13.0"
+    expected_version = f"1.12.1.git.kitware.jobserver-1{MSVC_DEPFILE}"
     scripts = _get_scripts()
     assert len(scripts) == 1
     assert scripts[0].stem == "ninja"
