@@ -32,7 +32,7 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Typing :: Typed",
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 
 [project.urls]
 "Bug Tracker" = "https://github.com/scikit-build/ninja-python-distributions/issues"
@@ -91,17 +91,18 @@ build-verbosity = 1
 test-groups = "test"
 test-command = "pytest {project}/tests"
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
+archs = ["auto64", "auto32"]
 environment = { NINJA_PYTHON_DIST_ALLOW_NINJA_DEP = "1" }
 environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
-manylinux-x86_64-image = "quay.io/pypa/manylinux2010_x86_64:latest"
-manylinux-i686-image = "quay.io/pypa/manylinux2010_i686:latest"
+manylinux-x86_64-image = "manylinux2014"
+manylinux-i686-image = "manylinux2014"
 manylinux-pypy_x86_64-image = "manylinux2014"
 manylinux-aarch64-image = "manylinux2014"
-musllinux-x86_64-image = "quay.io/pypa/musllinux_1_1_x86_64:latest"
-musllinux-i686-image = "quay.io/pypa/musllinux_1_1_i686:latest"
-musllinux-aarch64-image = "quay.io/pypa/musllinux_1_1_aarch64:latest"
-musllinux-ppc64le-image = "quay.io/pypa/musllinux_1_1_ppc64le:latest"
-musllinux-s390x-image = "quay.io/pypa/musllinux_1_1_s390x:latest"
+musllinux-x86_64-image = "musllinux_1_2"
+musllinux-i686-image = "musllinux_1_2"
+musllinux-aarch64-image = "musllinux_1_2"
+musllinux-ppc64le-image = "musllinux_1_2"
+musllinux-s390x-image = "musllinux_1_2"
 
 [tool.cibuildwheel.config-settings]
 "cmake.define.RUN_NINJA_TEST" = "ON"
