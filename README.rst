@@ -52,6 +52,7 @@ Python Version Support
 ----------------------
 
 Versions after 1.11.1.1 no longer support Python 2-3.6, and require manylinux2010+ on linux.
+Versions after 1.13 no longer support Python 3.7, and require manylinux2014+/musllinux_1_2+ on linux.
 
 License
 -------
