@@ -50,6 +50,8 @@ jobs:
             arch: "ppc64le"
           - os: ubuntu-24.04
             arch: "s390x"
+          - os: ubuntu-24.04
+            arch: "riscv64"
           - os: ubuntu-24.04-arm
             arch: "armv7l"
           - os: windows-2022
