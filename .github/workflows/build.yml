@@ -129,11 +129,11 @@ jobs:
   test_sdist:
     name: Test SDist with python ${{ matrix.python }}
     needs: [build_sdist]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python: ["3.7", "3.12"]
+        python: ["3.8", "3.13"]
 
     steps:
       - uses: actions/checkout@v4
@@ -147,7 +147,6 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: false
-          version: "0.6.17"
 
       - name: Setup environment
         run: |
