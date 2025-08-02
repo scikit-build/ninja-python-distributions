@@ -52,11 +52,11 @@ jobs:
             arch: "s390x"
           - os: ubuntu-24.04-arm
             arch: "armv7l"
-          - os: windows-2019
-            arch: "AMD64"
           - os: windows-2022
+            arch: "AMD64"
+          - os: windows-11-arm
             arch: "ARM64"
-          - os: windows-2019
+          - os: windows-2022
             arch: "x86"
           - os: macos-13
             arch: "universal2"
@@ -76,7 +76,7 @@ jobs:
           enable-cache: false
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.23
+        uses: pypa/cibuildwheel@v3.1
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
 
