@@ -33,27 +33,39 @@ jobs:
 
 
   build_wheels:
-    name: Build ${{ matrix.arch }} wheels on ${{ matrix.os }}
+    name: Build ${{ matrix.build }}${{ matrix.arch }} wheels on ${{ matrix.os }}
     needs: [lint]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-24.04
+          - os: ubuntu-latest
             arch: "x86_64"
-          - os: ubuntu-24.04
+          - os: ubuntu-latest
             arch: "i686"
           - os: ubuntu-24.04-arm
             arch: "aarch64"
-          - os: ubuntu-24.04
-            arch: "ppc64le"
-          - os: ubuntu-24.04
-            arch: "s390x"
-          - os: ubuntu-24.04
-            arch: "riscv64"
           - os: ubuntu-24.04-arm
             arch: "armv7l"
+          - os: ubuntu-latest
+            arch: "ppc64le"
+            build: "manylinux_"
+          - os: ubuntu-latest
+            arch: "ppc64le"
+            build: "musllinux_"
+          - os: ubuntu-latest
+            arch: "s390x"
+            build: "manylinux_"
+          - os: ubuntu-latest
+            arch: "s390x"
+            build: "musllinux_"
+          - os: ubuntu-latest
+            arch: "riscv64"
+            build: "manylinux_"
+          - os: ubuntu-latest
+            arch: "riscv64"
+            build: "musllinux_"
           - os: windows-2022
             arch: "AMD64"
           - os: windows-11-arm
@@ -81,10 +93,11 @@ jobs:
         uses: pypa/cibuildwheel@v3.1
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
+          CIBW_BUILD: "cp39-${{ matrix.build }}*"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ matrix.arch }}
+          name: cibw-wheels-${{ matrix.os }}-${{ matrix.build }}${{ matrix.arch }}
           path: ./wheelhouse/*.whl
 
       - name: Test wheel on host Linux
