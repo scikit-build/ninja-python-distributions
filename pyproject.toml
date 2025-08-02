@@ -140,6 +140,11 @@ select = "*_s390x"
 inherit.config-settings = "append"
 config-settings = {"cmake.define.TEST_OPTS" = "--gtest_filter=-DepsLogTest.MalformedDepsLog"}
 
+# Doesn't account for platform in 1.13.0 https://github.com/scikit-build/ninja-python-distributions/pull/305#issuecomment-3146299285
+[[tool.cibuildwheel.overrides]]
+select = "*-win*"
+inherit.config-settings = "append"
+config-settings = {"cmake.define.TEST_OPTS" = "--gtest_filter=-Jobserver.ParseNativeMakeFlagsValue"}
 
 
 [tool.pytest.ini_options]
