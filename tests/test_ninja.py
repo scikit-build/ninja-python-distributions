@@ -12,6 +12,7 @@ import ninja
 
 from . import push_argv
 
+
 MSVC_DEPFILE = ".msvcdepfile-1" if sys.platform.startswith("win32") else ""
 
 def _run(program, args):
