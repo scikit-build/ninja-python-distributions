@@ -7,7 +7,7 @@ Updating the Ninja version
 A developer should use the following steps to update the version ``X.Y.Z``
 of Ninja associated with the current Ninja python distributions.
 
-Available Ninja archives can be found `here <https://github.com/ninja-build/ninja/releases>`_.
+Available Ninja archives can be found `here <https://github.com/Kitware/ninja/releases>`_.
 
 Nox prodedure
 -------------
@@ -29,17 +29,17 @@ Classic procedure:
 2. Execute `scripts/update_ninja_version.py` command line tool with the desired
    ``X.Y.Z`` Ninja version available for download. For example::
 
-    $ release=1.13.0
+    $ release=1.13.0.gd74ef.kitware.jobserver-pipe-1
     $ python scripts/update_ninja_version.py ${release}
 
-    Collecting URLs and SHA256s from 'https://github.com/ninja-build/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1'
-    Downloading https://github.com/ninja-build/ninja/archive/v1.13.0.tar.gz
-    Downloading https://github.com/ninja-build/ninja/archive/v1.13.0.tar.gz - done
-    Downloading https://github.com/ninja-build/ninja/archive/v1.13.0.zip
-    Downloading https://github.com/ninja-build/ninja/archive/v1.13.0.zip - done
-    Collecting URLs and SHA256s from 'https://github.com/ninja-build/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1' - done
-    Updating 'NinjaUrls.cmake' with CMake version 1.13.0
-    Updating 'NinjaUrls.cmake' with CMake version 1.13.0 - done
+    Collecting URLs and SHA256s from 'https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1'
+    Downloading https://github.com/Kitware/ninja/archive/v1.13.0.gd74ef.kitware.jobserver-pipe-1.tar.gz
+    Downloading https://github.com/Kitware/ninja/archive/v1.13.0.gd74ef.kitware.jobserver-pipe-1.tar.gz - done
+    Downloading https://github.com/Kitware/ninja/archive/v1.13.0.gd74ef.kitware.jobserver-pipe-1.zip
+    Downloading https://github.com/Kitware/ninja/archive/v1.13.0.gd74ef.kitware.jobserver-pipe-1.zip - done
+    Collecting URLs and SHA256s from 'https://github.com/Kitware/ninja/archive/v1.10.0.gfb670.kitware.jobserver-1' - done
+    Updating 'NinjaUrls.cmake' with CMake version 1.13.0.gd74ef.kitware.jobserver-pipe-1
+    Updating 'NinjaUrls.cmake' with CMake version 1.13.0.gd74ef.kitware.jobserver-pipe-1 - done
     Updating README.rst
     Updating README.rst - done
     Updating docs/update_ninja_version.rst
@@ -51,7 +51,7 @@ Classic procedure:
 3. Create a topic named `update-to-ninja-X.Y.Z` and commit the changes.
    For example::
 
-    release=1.13.0
+    release=1.13.0.gd74ef.kitware.jobserver-pipe-1
     git checkout -b update-to-ninja-${release}
     git add NinjaUrls.cmake README.rst docs/update_ninja_version.rst tests/test_ninja.py
     git commit -m "Update to Ninja ${release}"
