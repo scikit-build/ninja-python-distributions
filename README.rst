@@ -4,7 +4,7 @@ Ninja Python Distributions
 
 `Ninja <http://www.ninja-build.org>`_ is a small build system with a focus on speed.
 
-The latest Ninja python wheels provide `ninja 1.12.1.ge64ce.kitware.jobserver-1.msvcdepfile-1 <https://ninja-build.org/manual.html>`_ executable
+The latest Ninja python wheels provide `ninja 1.13.0.gd74ef.kitware.jobserver-pipe-1 <https://ninja-build.org/manual.html>`_ executable
 and `ninja_syntax.py` for generating `.ninja` files.
 
 .. image:: https://raw.githubusercontent.com/scikit-build/ninja-python-distributions/master/ninja-python-distributions-logo.png
