@@ -1,4 +1,4 @@
-macs [build-system]
+[build-system]
 requires = ["scikit-build-core>=0.10"]
 build-backend = "backend"
 backend-path = ["_build_backend"]
