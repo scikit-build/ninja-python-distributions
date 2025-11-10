@@ -7,6 +7,8 @@ backend-path = ["_build_backend"]
 name = "ninja"
 dynamic = ["version", "readme"]
 description = "Ninja is a small build system with a focus on speed"
+license = "Apache-2.0"
+license-files = ["LICENSE_Apache_20"]
 authors = [
     { name = "Jean-Christophe Fillion-Robin", email = "scikit-build@googlegroups.com" },
     { name = "Henry Schreiner", email = "henryfs@princeton.edu" },
@@ -22,8 +24,6 @@ keywords = [
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
     "Programming Language :: C",
     "Programming Language :: C++",
