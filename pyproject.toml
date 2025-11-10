@@ -147,7 +147,7 @@ minversion = "6.0"
 addopts = ["-ra", "--strict-markers", "--strict-config", "-v"]
 xfail_strict = true
 filterwarnings = ["error"]
-log_cli_level = "INFO"
+log_level = "INFO"
 testpaths = [ "tests" ]
 
 
