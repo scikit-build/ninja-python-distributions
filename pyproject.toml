@@ -118,15 +118,22 @@ inherit.environment = "append"
 environment = { MACOSX_DEPLOYMENT_TARGET = "10.9" }
 
 [[tool.cibuildwheel.overrides]]
+select = "*-*linux*"
+before-all = "./scripts/install-static-clang.sh"
+inherit.environment = "append"
+environment = { CC = "/opt/clang/bin/clang", CXX = "/opt/clang/bin/clang++", LDFLAGS = "-fuse-ld=lld" }
+inherit.environment-pass = "append"
+environment-pass = ["RUNNER_ARCH"]
+
+[[tool.cibuildwheel.overrides]]
 select = "*-musllinux_*"
 inherit.environment = "append"
-environment = { LDFLAGS = "-static-libstdc++ -static-libgcc" }
+environment = { LDFLAGS = "-fuse-ld=lld -static-libstdc++ -static-libgcc -lssp_nonshared" }
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux_{ppc64le,s390x,riscv64}"
 build-frontend = "pip"  # uv not available
 inherit.test-command = "prepend"
-inherit.config-settings = "append"
 test-command = "pip check"
 
 # Doesn't account for endianness in 1.13.0 https://github.com/ninja-build/ninja/issues/2614
