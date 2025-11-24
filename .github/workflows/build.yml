@@ -25,7 +25,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: "3.x"
@@ -76,7 +76,7 @@ jobs:
             arch: "universal2"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0  # required for setuptools_scm to find tags
           submodules: 'recursive'
@@ -90,7 +90,7 @@ jobs:
           enable-cache: false
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.2
+        uses: pypa/cibuildwheel@v3.3
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
           CIBW_BUILD: "cp39-${{ matrix.build }}*"
@@ -113,7 +113,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0  # required for setuptools_scm to find tags
           submodules: 'recursive'
@@ -136,7 +136,7 @@ jobs:
         python: ["3.8", "3.13"]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         name: Install Python ${{ matrix.python }}
         id: python
