@@ -185,7 +185,7 @@ jobs:
           done
 
       - name: Install SDist
-        run: .venv/bin/pip install --no-binary=ninja $(ls sdist/*.tar.gz)
+        run: .venv/bin/pip install -v --no-binary=ninja $(ls sdist/*.tar.gz)
 
       - name: Test installed SDist
         run: .venv/bin/pip check && .venv/bin/pytest ./tests
