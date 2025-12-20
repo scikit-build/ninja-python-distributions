@@ -91,7 +91,6 @@ build-frontend = "build[uv]"
 build-verbosity = 1
 test-groups = "test"
 test-command = "pytest {project}/tests"
-test-skip = ["*-macosx_universal2:arm64"]
 environment = { NINJA_PYTHON_DIST_ALLOW_NINJA_DEP = "1" }
 environment-pass = ["SETUPTOOLS_SCM_PRETEND_VERSION"]
 manylinux-x86_64-image = "manylinux2014"
