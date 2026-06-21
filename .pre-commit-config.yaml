@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v6.0.0
+  rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
   hooks:
   - id: check-added-large-files
   - id: check-case-conflict
@@ -13,27 +13,33 @@ repos:
   - id: trailing-whitespace
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: "v0.15.17"
+  rev: "77039ccbba72c8aede339c5f8ae29b42aced0a2e"  # frozen: v0.15.18
   hooks:
   - id: ruff
     args: [--fix, --show-fixes]
 
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: "v2.1.0"
+  rev: "d2823d321df3af8f878f7ee3414dc94d037145b9"  # frozen: v2.1.0
   hooks:
     - id: mypy
       files: src
       args: []
 
 - repo: https://github.com/abravalheri/validate-pyproject
-  rev: "v0.25"
+  rev: "4b2e70d08cb2ccd26d1fba73588de41c7a5d50b7"  # frozen: v0.25
   hooks:
     - id: validate-pyproject
       additional_dependencies: ["validate-pyproject-schema-store[all]>=2024.10.21"]
 
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: "0.37.3"
+  rev: "8ef330cbb7204d388aa7a620f9549bcea8009663"  # frozen: 0.37.3
   hooks:
     - id: check-dependabot
     - id: check-github-workflows
     - id: check-readthedocs
+
+- repo: https://github.com/zizmorcore/zizmor-pre-commit
+  rev: e3eebf65325ccc992422292cb7a4baee967cf815  # frozen: v1.26.1
+  hooks:
+  - id: zizmor
+    files: "^\\.github"
