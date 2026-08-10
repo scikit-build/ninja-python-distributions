@@ -13,13 +13,13 @@ repos:
   - id: trailing-whitespace
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: "c59bba8fb259db0fec2bbb77ad8ba51ea7341b56"  # frozen: v0.15.20
+  rev: "7c55798a78262d14b2074abf623d8a992ebb70d4"  # frozen: v0.16.2
   hooks:
   - id: ruff
     args: [--fix, --show-fixes]
 
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: "d2823d321df3af8f878f7ee3414dc94d037145b9"  # frozen: v2.1.0
+  rev: "41e691678310dfd3833f7ab4e180ddb014310356"  # frozen: v2.3.0
   hooks:
     - id: mypy
       files: src
@@ -32,14 +32,14 @@ repos:
       additional_dependencies: ["validate-pyproject-schema-store[all]>=2024.10.21"]
 
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: "1a4bb160cab6417b3045e1b37b6b72449243e658"  # frozen: 0.37.4
+  rev: "c4654a7e007c9619a5eb63c39a456572a0fa1851"  # frozen: 0.38.0
   hooks:
     - id: check-dependabot
     - id: check-github-workflows
     - id: check-readthedocs
 
 - repo: https://github.com/zizmorcore/zizmor-pre-commit
-  rev: e3eebf65325ccc992422292cb7a4baee967cf815  # frozen: v1.26.1
+  rev: 451b56af716f9f0d0c2b816503a3fd0cf8b036fa  # frozen: v1.29.0
   hooks:
   - id: zizmor
     files: "^\\.github"
