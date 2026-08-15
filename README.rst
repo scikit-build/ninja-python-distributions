@@ -7,6 +7,12 @@ Ninja Python Distributions
 The latest Ninja python wheels provide `ninja 1.13.0.gd74ef.kitware.jobserver-pipe-1 <https://ninja-build.org/manual.html>`_ executable
 and `ninja_syntax.py` for generating `.ninja` files.
 
+The classes in ninja_syntax are in the ninja namespace, so are accesable via ``import ninja``, e.g. ::
+
+    import ninja
+    writer = ninja.Writer(sys.stdout)
+
+
 .. image:: https://raw.githubusercontent.com/scikit-build/ninja-python-distributions/master/ninja-python-distributions-logo.png
 
 Latest Release
