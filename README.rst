@@ -12,6 +12,11 @@ The classes in ninja_syntax are in the ninja namespace, so are accesable via ``i
     import ninja
     writer = ninja.Writer(sys.stdout)
 
+This package also installs a front-end to the nijnja executable, so that::
+
+    python -m ninja
+
+will call the executable.
 
 .. image:: https://raw.githubusercontent.com/scikit-build/ninja-python-distributions/master/ninja-python-distributions-logo.png
 
