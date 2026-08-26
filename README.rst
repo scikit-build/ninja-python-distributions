@@ -4,7 +4,7 @@ Ninja Python Distributions
 
 `Ninja <http://www.ninja-build.org>`_ is a small build system with a focus on speed.
 
-The latest Ninja python wheels provide `ninja 1.13.0.gd74ef.kitware.jobserver-pipe-1 <https://ninja-build.org/manual.html>`_ executable
+The latest Ninja python wheels provide `ninja 1.13.2.g7659b.kitware.jobserver-pipe-1 <https://ninja-build.org/manual.html>`_ executable
 and `ninja_syntax.py` for generating `.ninja` files.
 
 The classes in ninja_syntax are in the ninja namespace, so are accesable via ``import ninja``, e.g. ::
