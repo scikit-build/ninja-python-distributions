@@ -23,7 +23,8 @@ message(STATUS "")
 message(STATUS "  RUN_NINJA_TEST : ${RUN_NINJA_TEST}")
 message(STATUS "************************************")
 
-set(BUILD_TESTING ${RUN_NINJA_TEST} CACHE INTERNAL "")
+set(BUILD_TESTING "${RUN_NINJA_TEST}" CACHE BOOL "Build the testing tree." FORCE)
+set_property(CACHE BUILD_TESTING PROPERTY TYPE INTERNAL)
 
 add_subdirectory(ninja-upstream)
 
