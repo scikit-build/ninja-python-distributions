@@ -7,16 +7,23 @@ Ninja Python Distributions
 The latest Ninja python wheels provide `ninja 1.13.2.g7659b.kitware.jobserver-pipe-1 <https://ninja-build.org/manual.html>`_ executable
 and `ninja_syntax.py` for generating `.ninja` files.
 
-The classes in ninja_syntax are in the ninja namespace, so are accesable via ``import ninja``, e.g. ::
+The classes in ninja_syntax are in the ninja namespace, so are accessible via ``import ninja``, e.g. ::
 
     import ninja
     writer = ninja.Writer(sys.stdout)
 
-This package also installs a front-end to the nijnja executable, so that::
+This package also installs a front-end to the ninja executable, so that::
 
     python -m ninja
 
-will call the executable.
+will call the executable. You can also call it from Python with ``ninja.ninja()``,
+which forwards ``sys.argv`` and exits with the ninja return code. The directory that
+holds the executable is available as ``ninja.BIN_DIR``.
+
+The package does not provide Python bindings to the ninja build engine itself. It only
+distributes the executable and the upstream ``ninja_syntax.py`` helper. Since
+this is only a redistribution, and should not be required if ninja is already
+present, it is not the right place for bindings.
 
 .. image:: https://raw.githubusercontent.com/scikit-build/ninja-python-distributions/master/ninja-python-distributions-logo.png
 
