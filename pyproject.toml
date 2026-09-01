@@ -159,6 +159,11 @@ strict = true
 enable_error_code = ["ignore-without-code", "truthy-bool", "redundant-expr"]
 warn_unreachable = true
 
+# ninja_syntax.py is added by the build from the ninja sources; it is annotated upstream
+[[tool.mypy.overrides]]
+module = "ninja.ninja_syntax"
+ignore_missing_imports = true
+
 
 [tool.ruff]
 src = ["src"]
