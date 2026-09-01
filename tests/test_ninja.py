@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import inspect
 import os
+import pathlib
 import subprocess
 import sys
 import sysconfig
@@ -9,6 +11,7 @@ import pytest
 from importlib_metadata import distribution
 
 import ninja
+from ninja import ninja_syntax
 
 from . import push_argv
 
@@ -48,3 +51,9 @@ def test_ninja_script():
     assert scripts[0].stem == "ninja"
     output = subprocess.check_output([str(scripts[0]), "--version"]).decode("ascii")
     assert output.splitlines()[0] == expected_version
+
+
+def test_ninja_syntax_typed():
+    """Type checkers must use the annotations in ninja_syntax.py, not an outdated stub."""
+    assert not pathlib.Path(ninja_syntax.__file__).with_suffix(".pyi").exists()
+    assert inspect.signature(ninja_syntax.Writer.build).return_annotation != inspect.Signature.empty
