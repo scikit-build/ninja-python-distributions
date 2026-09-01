@@ -21,8 +21,9 @@ which forwards ``sys.argv`` and exits with the ninja return code. The directory 
 holds the executable is available as ``ninja.BIN_DIR``.
 
 The package does not provide Python bindings to the ninja build engine itself. It only
-distributes the executable and the upstream ``ninja_syntax.py`` helper. Contributions
-that add such bindings are welcome.
+distributes the executable and the upstream ``ninja_syntax.py`` helper. Since
+this is only a redistribution, and should not be required if ninja is already
+present, it is not the right place for bindings.
 
 .. image:: https://raw.githubusercontent.com/scikit-build/ninja-python-distributions/master/ninja-python-distributions-logo.png
 
